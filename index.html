@@ -1,8 +1,1019 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="refresh" content="0; url=portfolio-marcos.html">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Marcos Ruiz — Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #080808;
+    --surface: #111111;
+    --surface-hover: #181818;
+    --border: #1f1f1f;
+    --border-hover: #2e2e2e;
+    --text-primary: #F0F0ED;
+    --text-secondary: #888880;
+    --text-muted: #444440;
+    --accent: #E2FF00;
+    --accent-dim: rgba(226,255,0,0.08);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text-primary);
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 3rem;
+    height: 64px;
+    border-bottom: 1px solid var(--border);
+    background: rgba(8,8,8,0.85);
+    backdrop-filter: blur(12px);
+  }
+
+  .nav-logo {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: -0.02em;
+    color: var(--text-primary);
+    text-decoration: none;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+
+  .nav-links a,
+  .nav-btn {
+    font-size: 13px;
+    color: var(--text-secondary);
+    text-decoration: none;
+    letter-spacing: 0.02em;
+    transition: color 0.2s;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    font-family: 'Inter', sans-serif;
+  }
+
+  .nav-links a:hover,
+  .nav-btn:hover { color: var(--text-primary); }
+
+  .nav-cta {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--bg);
+    background: var(--accent);
+    padding: 8px 18px;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: opacity 0.2s;
+  }
+
+  .nav-cta:hover { opacity: 0.85; }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    padding: 64px 0 0;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .hero-inner {
+    display: grid;
+    grid-template-columns: 1fr 40vw;
+    align-items: center;
+    gap: 5vw;
+    width: 100%;
+    padding: 0 4vw;
+  }
+
+  .hero-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero-label {
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+  }
+
+  .hero-name {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(48px, 7vw, 130px);
+    font-weight: 700;
+    line-height: 0.88;
+    letter-spacing: -0.04em;
+    color: #FFFFFF;
+    margin-bottom: 2.5rem;
+  }
+
+  .hero-name span {
+    color: var(--accent);
+  }
+
+  .hero-roles {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 3rem;
+  }
+
+  .role-tag {
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: var(--text-secondary);
+    border: 1px solid var(--border-hover);
+    padding: 6px 14px;
+    border-radius: 2px;
+    text-transform: uppercase;
+  }
+
+  .hero-scroll {
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .hero-scroll::before {
+    content: '';
+    display: block;
+    width: 32px;
+    height: 1px;
+    background: var(--text-muted);
+  }
+
+  /* FOTO HERO */
+  .hero-photo-col {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    padding: 5rem 0;
+  }
+
+  .hero-photo-frame {
+    width: 100%;
+    max-width: 520px;
+    aspect-ratio: 3/4;
+    border: 1px solid var(--border-hover);
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .hero-photo-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    display: block;
+  }
+
+  .hero-photo-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: var(--surface);
+    gap: 1rem;
+    cursor: pointer;
+  }
+
+  .hero-photo-placeholder-icon {
+    font-size: 3rem;
+    opacity: 0.15;
+  }
+
+  .hero-photo-placeholder p {
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  .hero-photo-accent {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--accent);
+  }
+
+  .hero-grid-bg {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(var(--border) 1px, transparent 1px),
+      linear-gradient(90deg, var(--border) 1px, transparent 1px);
+    background-size: 80px 80px;
+    opacity: 0.35;
+    pointer-events: none;
+  }
+
+  .hero-grid-fade {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 70% 80% at 25% 50%, rgba(8,8,8,0) 0%, rgba(8,8,8,0.4) 100%);
+    pointer-events: none;
+  }
+
+  /* FILTROS */
+  .filters-section {
+    padding: 3rem 3rem 0;
+  }
+
+  .filters {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .filter-btn {
+    font-size: 12px;
+    font-family: 'Inter', sans-serif;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    background: transparent;
+    border: 1px solid var(--border);
+    padding: 7px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+
+  .filter-btn:hover {
+    border-color: var(--border-hover);
+    color: var(--text-primary);
+  }
+
+  .filter-btn.active {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--bg);
+    font-weight: 600;
+  }
+
+  /* GRID */
+  .projects-section {
+    padding: 2.5rem 3rem 6rem;
+  }
+
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+
+  /* Tarjeta base */
+  .project-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 2rem;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.2s;
+    min-height: 300px;
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    color: inherit;
+    justify-content: space-between;
+  }
+
+  .project-card.wide {
+    grid-column: span 1;
+  }
+
+  .project-card.tall {
+    min-height: 300px;
+  }
+
+  .project-card:hover {
+    background: var(--surface-hover);
+    z-index: 1;
+  }
+
+  /* Borde animado en hover */
+  .project-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border: 1.5px solid transparent;
+    transition: border-color 0.2s;
+    pointer-events: none;
+  }
+
+  .project-card:hover::after {
+    border-color: var(--accent);
+  }
+
+  .card-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+  }
+
+  .card-cat {
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 500;
+  }
+
+  .card-year {
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+  }
+
+  .card-thumb {
+    width: 100%;
+    aspect-ratio: 16/9;
+    background: var(--border);
+    border-radius: 2px;
+    margin-bottom: 1.5rem;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .card-thumb-inner {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+  }
+
+  .card-thumb-uxui { background: linear-gradient(135deg, #111 0%, #1a1a2e 100%); }
+  .card-thumb-cro { background: linear-gradient(135deg, #111 0%, #1a2e1a 100%); }
+  .card-thumb-brand { background: linear-gradient(135deg, #111 0%, #2e1a1a 100%); }
+  .card-thumb-data { background: linear-gradient(135deg, #111 0%, #1e1a2e 100%); }
+
+  .thumb-icon {
+    font-size: 2.5rem;
+    opacity: 0.3;
+  }
+
+  .card-body {}
+
+  .card-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    margin-bottom: 0.5rem;
+    color: var(--text-primary);
+  }
+
+  .project-card.wide .card-title {
+    font-size: 26px;
+  }
+
+  .card-desc {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .card-footer {
+    margin-top: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .card-tags {
+    display: flex;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+  }
+
+  .tag {
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    border: 1px solid var(--border);
+    padding: 3px 8px;
+    border-radius: 2px;
+  }
+
+  .card-arrow {
+    font-size: 18px;
+    color: var(--text-muted);
+    transition: transform 0.2s, color 0.2s;
+    line-height: 1;
+  }
+
+  .project-card:hover .card-arrow {
+    transform: translate(3px, -3px);
+    color: var(--accent);
+  }
+
+  /* ABOUT strip */
+  .about-strip {
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 4rem 3rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+
+  .about-heading {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(28px, 4vw, 48px);
+    font-weight: 700;
+    letter-spacing: -0.04em;
+    line-height: 1.05;
+  }
+
+  .about-heading em {
+    font-style: normal;
+    color: var(--accent);
+  }
+
+  .about-body {
+    color: var(--text-secondary);
+    font-size: 15px;
+    line-height: 1.75;
+  }
+
+  .about-body p + p { margin-top: 1rem; }
+
+  .about-meta {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+    margin-bottom: 1.5rem;
+  }
+
+  .about-meta-label {
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 0.4rem;
+  }
+
+  .about-meta-value {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+
+  .skills-list {
+    margin-top: 1.5rem;
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .skill-pill {
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    border: 1px solid var(--border-hover);
+    padding: 5px 12px;
+    border-radius: 2px;
+    color: var(--text-secondary);
+  }
+
+  /* FOOTER */
+  footer {
+    padding: 2.5rem 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .footer-left {
+    font-size: 13px;
+    color: var(--text-muted);
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 2rem;
+  }
+
+  .footer-links a {
+    font-size: 13px;
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .footer-links a:hover { color: var(--accent); }
+
+  /* HIDDEN CLASS */
+  .project-card.hidden {
+    display: none;
+  }
+
+  /* Scroll offset para nav fija */
+  #proyectos,
+  #sobre-mi {
+    scroll-margin-top: 64px;
+  }
+
+  @media (max-width: 900px) {
+    nav { padding: 0 1.5rem; }
+    .nav-links { display: none; }
+    .hero { padding: 5rem 1.5rem 4rem; }
+    .hero-inner { grid-template-columns: 1fr; gap: 3rem; }
+    .hero-photo-col { padding: 0; }
+    .hero-photo-frame { max-width: 100%; aspect-ratio: 4/3; }
+    .filters-section { padding: 2rem 1.5rem 0; }
+    .projects-section { padding: 2rem 1.5rem 4rem; }
+    .projects-grid { grid-template-columns: 1fr; gap: 16px; }
+    .project-card { grid-column: span 1 !important; }
+    .about-strip { grid-template-columns: 1fr; gap: 2rem; padding: 3rem 1.5rem; }
+    footer { padding: 2rem 1.5rem; }
+  }
+</style>
 </head>
-<body></body>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">MR.</a>
+  <ul class="nav-links">
+    <li><button class="nav-btn" onclick="navScrollTo('proyectos')">Proyectos</button></li>
+    <li><button class="nav-btn" onclick="navScrollTo('sobre-mi')">Sobre mí</button></li>
+  </ul>
+  <a href="mailto:marcosruis937@gmail.com" class="nav-cta">Contacto</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-grid-bg"></div>
+  <div class="hero-grid-fade"></div>
+
+  <div class="hero-inner">
+    <!-- Columna izquierda: texto -->
+    <div class="hero-content">
+
+      <h1 class="hero-name">Marcos<br>Ruiz <span>Ibáñez</span></h1>
+      <div class="hero-roles">
+        <span class="role-tag">UX/UI Designer</span>
+        <span class="role-tag">CRO Specialist</span>
+        <span class="role-tag">Behavioral Design</span>
+        <span class="role-tag">Visual Designer</span>
+      </div>
+      <span class="hero-scroll">Scroll para ver trabajo</span>
+    </div>
+
+    <!-- Columna derecha: foto -->
+    <div class="hero-photo-col">
+      <div class="hero-photo-frame">
+        <img src="assets/Marcos.jpg" alt="Marcos Ruiz Ibáñez">
+        <div class="hero-photo-accent"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FILTROS -->
+<div class="filters-section" id="proyectos">
+  <div class="filters">
+    <button class="filter-btn active" data-filter="all">Todo</button>
+    <button class="filter-btn" data-filter="uxui">UX/UI</button>
+    <button class="filter-btn" data-filter="cro">CRO</button>
+  </div>
+</div>
+
+<!-- GRID DE PROYECTOS -->
+<section class="projects-section">
+  <div class="projects-grid">
+
+    <!-- Creatividades captación másteres -->
+    <a class="project-card" href="creatividades-captacion.html" data-category="cro">
+      <div class="card-top">
+        <span class="card-cat">CRO</span>
+        <span class="card-year">2025–2026</span>
+      </div>
+      <div class="card-thumb card-thumb-cro" style="padding:0; overflow:hidden;">
+        <img src="assets/Campañas/Imagen inicio.jpg" alt="Campaña de captación" style="width:100%; height:100%; object-fit:cover; object-position:top; display:block;">
+      </div>
+      <div class="card-body">
+        <h2 class="card-title">Creatividades para la captación de leads</h2>
+        <p class="card-desc">De buyer persona a pieza que convierte. Diseño y copy para Meta que duplicaron el CTR en captación de educación superior.</p>
+      </div>
+      <div class="card-footer">
+        <div class="card-tags">
+          <span class="tag">UX Writing</span>
+          <span class="tag">Meta Ads</span>
+          <span class="tag">Diseño visual</span>
+        </div>
+        <span class="card-arrow">↗</span>
+      </div>
+    </a>
+
+    <!-- ENAEpass TFM — UX/UI destacado -->
+    <a class="project-card" href="landing-bias-map.html" data-category="uxui" style="border-color: #2a2a1a;" onmouseover="this.style.borderColor='#E2FF00'" onmouseout="this.style.borderColor='#2a2a1a'">
+      <div class="card-top">
+        <span class="card-cat">UX Research</span>
+        <span class="card-year">2025–2026</span>
+      </div>
+      <div class="card-thumb card-thumb-uxui" style="padding:0; overflow:hidden;">
+        <img src="assets/Landing ENAEPASS/landign.jpg" alt="ENAE-PASS landing analysis" style="width:100%; height:100%; object-fit:cover; object-position: top; display:block;">
+      </div>
+      <div class="card-body">
+        <h2 class="card-title">Landing para la plataforma ENAE-PASS</h2>
+        <p class="card-desc">Análisis de behavioral design aplicado a la landing de ENAE-PASS. Mapa de sesgos cognitivos por sección: benchmark de competidores, contextos de incertidumbre e intervenciones de conversión.</p>
+      </div>
+      <div class="card-footer">
+        <div class="card-tags">
+          <span class="tag">Behavioral Design</span>
+          <span class="tag">UX Research</span>
+          <span class="tag">Conversión</span>
+        </div>
+        <span class="card-arrow">↗</span>
+      </div>
+    </a>
+
+    <a class="project-card" href="enaepass-case-study.html" data-category="uxui" style="border-color: #2a2a1a;" onmouseover="this.style.borderColor='#E2FF00'" onmouseout="this.style.borderColor='#2a2a1a'">
+      <div class="card-top">
+        <span class="card-cat">UX/UI</span>
+        <span class="card-year">2025 · TFM</span>
+      </div>
+      <div class="card-thumb card-thumb-uxui" style="padding:0; overflow:hidden;">
+        <img src="assets/enaepass/Imagen inicio mockup.jpg" alt="Portal del Alumno mockup" style="width:100%; height:100%; object-fit:cover; display:block;">
+      </div>
+      <div class="card-body">
+        <h2 class="card-title">Portal del Alumno</h2>
+        <p class="card-desc">Rediseño integral del portal estudiantil de ENAE desde cero. UX end-to-end: research, arquitectura de información, prototipado y sistema visual. TFM Máster UX/UI.</p>
+      </div>
+      <div class="card-footer">
+        <div class="card-tags">
+          <span class="tag">Design Thinking</span>
+          <span class="tag">Figma</span>
+          <span class="tag">Research</span>
+        </div>
+        <span class="card-arrow">↗</span>
+      </div>
+    </a>
+
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="sobre-mi" style="border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 6rem 3rem;">
+  <div style="max-width: 1100px; margin: 0 auto;">
+
+    <!-- Cabecera -->
+    <p style="font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 1.5rem;">Sobre mí</p>
+    <h2 style="font-family: 'Space Grotesk', sans-serif; font-size: clamp(36px, 5vw, 64px); font-weight: 700; letter-spacing: -0.04em; line-height: 0.95; margin-bottom: 4rem;">Curiosidad<br>como método<span style="color: var(--accent);">.</span></h2>
+
+    <!-- Bio -->
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; margin-bottom: 4rem; padding-bottom: 4rem; border-bottom: 1px solid var(--border);">
+      <p style="font-size: 16px; color: var(--text-secondary); line-height: 1.8;">Me considero una persona impulsada por la curiosidad y una pasión por entender el porqué de las cosas. Mi forma de trabajar nace de esa inquietud por analizar, cuestionar y transformar ideas en experiencias digitales funcionales, atractivas y estratégicas.</p>
+      <p style="font-size: 16px; color: var(--text-secondary); line-height: 1.8;">Creo en el diseño como una herramienta para resolver problemas, simplificar procesos y construir experiencias que aporten valor. Me mueve aprender, explorar nuevas perspectivas y seguir evolucionando en cada proyecto.</p>
+    </div>
+
+    <!-- Experiencia -->
+    <p style="font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 2rem;">Experiencia laboral</p>
+    <div style="display: flex; flex-direction: column; gap: 0; margin-bottom: 4rem; padding-bottom: 4rem; border-bottom: 1px solid var(--border);">
+
+      <div style="display: grid; grid-template-columns: 200px 1fr; gap: 3rem; padding: 2rem 0; border-bottom: 1px solid var(--border);">
+        <div>
+          <p style="font-size: 12px; color: var(--text-muted); letter-spacing: 0.05em;">oct. 2024 — actualidad</p>
+        </div>
+        <div>
+          <p style="font-family: 'Space Grotesk', sans-serif; font-size: 18px; font-weight: 600; margin-bottom: 0.25rem;">UX/UI Designer y Gráfico</p>
+          <p style="font-size: 13px; color: var(--accent); margin-bottom: 1rem; letter-spacing: 0.03em;">ENAE — Escuela de Negocios</p>
+          <ul style="list-style: none; display: flex; flex-direction: column; gap: 0.5rem;">
+            <li style="font-size: 14px; color: var(--text-secondary); display: flex; gap: 0.75rem;"><span style="color: var(--accent); flex-shrink: 0;">—</span>Diseño de páginas web y landing pages aplicando UX y Behavioral Design para maximizar la conversión y la captación de leads cualificados.</li>
+            <li style="font-size: 14px; color: var(--text-secondary); display: flex; gap: 0.75rem;"><span style="color: var(--accent); flex-shrink: 0;">—</span>Desarrollo de dosieres y creatividades para redes sociales y campañas de paid media.</li>
+            <li style="font-size: 14px; color: var(--text-secondary); display: flex; gap: 0.75rem;"><span style="color: var(--accent); flex-shrink: 0;">—</span>Preparación de materiales para impresión, asegurando su correcta adaptación y calidad final.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div style="display: grid; grid-template-columns: 200px 1fr; gap: 3rem; padding: 2rem 0;">
+        <div>
+          <p style="font-size: 12px; color: var(--text-muted); letter-spacing: 0.05em;">feb. 2022 — jun. 2022</p>
+        </div>
+        <div>
+          <p style="font-family: 'Space Grotesk', sans-serif; font-size: 18px; font-weight: 600; margin-bottom: 0.25rem;">UI Designer</p>
+          <p style="font-size: 13px; color: var(--accent); margin-bottom: 1rem; letter-spacing: 0.03em;">SOMOSVITAMIN — Agencia de branding y marketing</p>
+          <ul style="list-style: none; display: flex; flex-direction: column; gap: 0.5rem;">
+            <li style="font-size: 14px; color: var(--text-secondary); display: flex; gap: 0.75rem;"><span style="color: var(--accent); flex-shrink: 0;">—</span>Maquetación de páginas web y tiendas eCommerce.</li>
+            <li style="font-size: 14px; color: var(--text-secondary); display: flex; gap: 0.75rem;"><span style="color: var(--accent); flex-shrink: 0;">—</span>Desarrollo de interfaces intuitivas, funcionales y visualmente atractivas.</li>
+            <li style="font-size: 14px; color: var(--text-secondary); display: flex; gap: 0.75rem;"><span style="color: var(--accent); flex-shrink: 0;">—</span>Comunicación directa con clientes para identificar necesidades y transformarlas en soluciones de diseño eficaces.</li>
+            <li style="font-size: 14px; color: var(--text-secondary); display: flex; gap: 0.75rem;"><span style="color: var(--accent); flex-shrink: 0;">—</span>Foco constante en la experiencia de usuario, la funcionalidad del producto y la satisfacción del cliente.</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Formación -->
+    <p style="font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 2rem;">Formación</p>
+    <div style="display: flex; flex-direction: column; gap: 0; margin-bottom: 4rem; padding-bottom: 4rem; border-bottom: 1px solid var(--border);">
+
+      <div style="display: grid; grid-template-columns: 200px 1fr; gap: 3rem; padding: 1.5rem 0; border-bottom: 1px solid var(--border);">
+        <p style="font-size: 12px; color: var(--text-muted);">2025 — 2026</p>
+        <div>
+          <p style="font-family: 'Space Grotesk', sans-serif; font-size: 16px; font-weight: 600; margin-bottom: 0.2rem;">Máster en Marketing Digital Mención en IA</p>
+          <p style="font-size: 13px; color: var(--accent);">ENAE Business School</p>
+        </div>
+      </div>
+
+      <div style="display: grid; grid-template-columns: 200px 1fr; gap: 3rem; padding: 1.5rem 0; border-bottom: 1px solid var(--border);">
+        <p style="font-size: 12px; color: var(--text-muted);">2025</p>
+        <div>
+          <p style="font-family: 'Space Grotesk', sans-serif; font-size: 16px; font-weight: 600; margin-bottom: 0.2rem;">Máster en UX/UI</p>
+          <p style="font-size: 13px; color: var(--accent);">Kschool</p>
+        </div>
+      </div>
+
+      <div style="display: grid; grid-template-columns: 200px 1fr; gap: 3rem; padding: 1.5rem 0; border-bottom: 1px solid var(--border);">
+        <p style="font-size: 12px; color: var(--text-muted);">2018 — 2022</p>
+        <div>
+          <p style="font-family: 'Space Grotesk', sans-serif; font-size: 16px; font-weight: 600; margin-bottom: 0.2rem;">Grado Universitario en Diseño Gráfico</p>
+          <p style="font-size: 13px; color: var(--accent);">Escuela Superior Internacional de Diseño</p>
+        </div>
+      </div>
+
+      <div style="display: grid; grid-template-columns: 200px 1fr; gap: 3rem; padding: 1.5rem 0;">
+        <p style="font-size: 12px; color: var(--text-muted);">2026</p>
+        <div>
+          <p style="font-family: 'Space Grotesk', sans-serif; font-size: 16px; font-weight: 600; margin-bottom: 0.2rem;">Curso en Behavioral Design</p>
+          <p style="font-size: 13px; color: var(--accent);">The Behavioral School</p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Habilidades visual -->
+    <div style="margin-bottom: 4rem; padding-bottom: 4rem; border-bottom: 1px solid var(--border);">
+      <p style="font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 1.5rem;">Habilidades</p>
+      <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px;">
+
+        <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 4px; padding: 1.5rem; display: flex; flex-direction: column; gap: 1rem; transition: border-color 0.2s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='#1f1f1f'">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 3C7 3 3 7 3 12s4 9 9 9 9-4 9-9-4-9-9-9zm0 4a2 2 0 110 4 2 2 0 010-4zm0 10c-2.5 0-4.7-1.3-6-3.2.03-2 4-3.1 6-3.1s5.97 1.1 6 3.1A7.18 7.18 0 0112 17z" fill="#E2FF00"/></svg>
+          <div>
+            <p style="font-family: 'Space Grotesk', sans-serif; font-size: 14px; font-weight: 600; margin-bottom: 0.25rem;">User Persona</p>
+            <p style="font-size: 12px; color: var(--text-muted); line-height: 1.5;">Definición de perfiles de usuario basados en investigación real.</p>
+          </div>
+        </div>
+
+        <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 4px; padding: 1.5rem; display: flex; flex-direction: column; gap: 1rem; transition: border-color 0.2s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='#1f1f1f'">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 3h18v2H3V3zm0 4h12v2H3V7zm0 4h18v2H3v-2zm0 4h12v2H3v-2zm0 4h18v2H3v-2z" fill="#E2FF00"/></svg>
+          <div>
+            <p style="font-family: 'Space Grotesk', sans-serif; font-size: 14px; font-weight: 600; margin-bottom: 0.25rem;">UX/UI Design</p>
+            <p style="font-size: 12px; color: var(--text-muted); line-height: 1.5;">Diseño de interfaces centradas en la experiencia y usabilidad.</p>
+          </div>
+        </div>
+
+        <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 4px; padding: 1.5rem; display: flex; flex-direction: column; gap: 1rem; transition: border-color 0.2s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='#1f1f1f'">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M21 21H3V3h9V1H3C1.9 1 1 1.9 1 3v18c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2v-9h-2v9zM14 1v2h3.59L7.76 12.83l1.41 1.41L19 4.41V8h2V1h-7z" fill="#E2FF00"/></svg>
+          <div>
+            <p style="font-family: 'Space Grotesk', sans-serif; font-size: 14px; font-weight: 600; margin-bottom: 0.25rem;">CRO</p>
+            <p style="font-size: 12px; color: var(--text-muted); line-height: 1.5;">Optimización de conversión con datos y frameworks conductuales.</p>
+          </div>
+        </div>
+
+        <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 4px; padding: 1.5rem; display: flex; flex-direction: column; gap: 1rem; transition: border-color 0.2s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='#1f1f1f'">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z" fill="#E2FF00"/></svg>
+          <div>
+            <p style="font-family: 'Space Grotesk', sans-serif; font-size: 14px; font-weight: 600; margin-bottom: 0.25rem;">Behavioral Design</p>
+            <p style="font-size: 12px; color: var(--text-muted); line-height: 1.5;">Aplicación de psicología cognitiva al diseño de experiencias.</p>
+          </div>
+        </div>
+
+        <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 4px; padding: 1.5rem; display: flex; flex-direction: column; gap: 1rem; transition: border-color 0.2s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='#1f1f1f'">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M17 12h-5v5h5v-5zM16 1v2H8V1H6v2H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-1V1h-2zm3 18H5V8h14v11z" fill="#E2FF00"/></svg>
+          <div>
+            <p style="font-family: 'Space Grotesk', sans-serif; font-size: 14px; font-weight: 600; margin-bottom: 0.25rem;">Customer Journey</p>
+            <p style="font-size: 12px; color: var(--text-muted); line-height: 1.5;">Mapeo de puntos de contacto y fricciones en el viaje del usuario.</p>
+          </div>
+        </div>
+
+        <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 4px; padding: 1.5rem; display: flex; flex-direction: column; gap: 1rem; transition: border-color 0.2s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='#1f1f1f'">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 21c0 .55.45 1 1 1h4c.55 0 1-.45 1-1v-1H9v1zm3-19C8.14 2 5 5.14 5 9c0 2.38 1.19 4.47 3 5.74V17c0 .55.45 1 1 1h6c.55 0 1-.45 1-1v-2.26c1.81-1.27 3-3.36 3-5.74 0-3.86-3.14-7-7-7z" fill="#E2FF00"/></svg>
+          <div>
+            <p style="font-family: 'Space Grotesk', sans-serif; font-size: 14px; font-weight: 600; margin-bottom: 0.25rem;">Insight</p>
+            <p style="font-size: 12px; color: var(--text-muted); line-height: 1.5;">Extracción de conclusiones accionables desde datos cualitativos.</p>
+          </div>
+        </div>
+
+        <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 4px; padding: 1.5rem; display: flex; flex-direction: column; gap: 1rem; transition: border-color 0.2s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='#1f1f1f'">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="#E2FF00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <div>
+            <p style="font-family: 'Space Grotesk', sans-serif; font-size: 14px; font-weight: 600; margin-bottom: 0.25rem;">Branding</p>
+            <p style="font-size: 12px; color: var(--text-muted); line-height: 1.5;">Construcción de identidades visuales coherentes y memorables.</p>
+          </div>
+        </div>
+
+        <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 4px; padding: 1.5rem; display: flex; flex-direction: column; gap: 1rem; transition: border-color 0.2s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='#1f1f1f'">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z" fill="#E2FF00"/></svg>
+          <div>
+            <p style="font-family: 'Space Grotesk', sans-serif; font-size: 14px; font-weight: 600; margin-bottom: 0.25rem;">Test de Usabilidad</p>
+            <p style="font-size: 12px; color: var(--text-muted); line-height: 1.5;">Validación de diseños con usuarios reales para detectar fricciones.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Software con logos -->
+    <div>
+      <p style="font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 1.5rem;">Software</p>
+      <div style="display: grid; grid-template-columns: repeat(8, 1fr); gap: 12px;">
+
+        <!-- Figma -->
+        <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 4px; padding: 1.25rem 1rem; display: flex; flex-direction: column; align-items: center; gap: 0.75rem; transition: border-color 0.2s;" onmouseover="this.style.borderColor='#2e2e2e'" onmouseout="this.style.borderColor='#1f1f1f'">
+          <svg width="28" height="28" viewBox="0 0 38 57" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M19 28.5C19 25.9804 20.0009 23.5641 21.7825 21.7825C23.5641 20.0009 25.9804 19 28.5 19C31.0196 19 33.4359 20.0009 35.2175 21.7825C36.9991 23.5641 38 25.9804 38 28.5C38 31.0196 36.9991 33.4359 35.2175 35.2175C33.4359 36.9991 31.0196 38 28.5 38C25.9804 38 23.5641 36.9991 21.7825 35.2175C20.0009 33.4359 19 31.0196 19 28.5Z" fill="#1ABCFE"/>
+            <path d="M0 47.5C0 44.9804 1.00089 42.5641 2.78249 40.7825C4.56408 39.0009 6.98044 38 9.5 38H19V47.5C19 50.0196 17.9991 52.4359 16.2175 54.2175C14.4359 55.9991 12.0196 57 9.5 57C6.98044 57 4.56408 55.9991 2.78249 54.2175C1.00089 52.4359 0 50.0196 0 47.5Z" fill="#0ACF83"/>
+            <path d="M19 0V19H28.5C31.0196 19 33.4359 17.9991 35.2175 16.2175C36.9991 14.4359 38 12.0196 38 9.5C38 6.98044 36.9991 4.56408 35.2175 2.78249C33.4359 1.00089 31.0196 0 28.5 0H19Z" fill="#FF7262"/>
+            <path d="M0 9.5C0 12.0196 1.00089 14.4359 2.78249 16.2175C4.56408 17.9991 6.98044 19 9.5 19H19V0H9.5C6.98044 0 4.56408 1.00089 2.78249 2.78249C1.00089 4.56408 0 6.98044 0 9.5Z" fill="#F24E1E"/>
+            <path d="M0 28.5C0 31.0196 1.00089 33.4359 2.78249 35.2175C4.56408 36.9991 6.98044 38 9.5 38H19V19H9.5C6.98044 19 4.56408 20.0009 2.78249 21.7825C1.00089 23.5641 0 25.9804 0 28.5Z" fill="#A259FF"/>
+          </svg>
+          <span style="font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted);">Figma</span>
+        </div>
+
+        <!-- Adobe (Cc genérico) -->
+        <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 4px; padding: 1.25rem 1rem; display: flex; flex-direction: column; align-items: center; gap: 0.75rem;" onmouseover="this.style.borderColor='#2e2e2e'" onmouseout="this.style.borderColor='#1f1f1f'">
+          <svg width="28" height="28" viewBox="0 0 240 234" xmlns="http://www.w3.org/2000/svg">
+            <path d="M42.6 0h154.8C221 0 240 19 240 42.6v148.8c0 23.6-19 42.6-42.6 42.6H42.6C19 234 0 215 0 191.4V42.6C0 19 19 0 42.6 0z" fill="#FF0000"/>
+            <path d="M116.7 97.9L89 174H70.2l-8.6-27.3H31.9L23.6 174H6l29.4-76.1h22.4l8.3 26.3h29.1l8.1-26.3h13.4zm-53.8 35.3H47.7l7.6-24.1 7.6 24.1zm118.9-35.3V174h-16.6v-76.1h16.6zm-16.6-17.3c0-4.9 1.8-9.1 5.3-12.4 3.6-3.3 7.8-5 12.8-5 5 0 9.2 1.7 12.7 5 3.5 3.3 5.2 7.5 5.2 12.4 0 4.9-1.7 9.1-5.2 12.4-3.5 3.3-7.7 5-12.7 5-5 0-9.2-1.7-12.8-5-3.5-3.3-5.3-7.5-5.3-12.4z" fill="#fff"/>
+          </svg>
+          <span style="font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted);">Adobe</span>
+        </div>
+
+        <!-- Miro -->
+        <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 4px; padding: 1.25rem 1rem; display: flex; flex-direction: column; align-items: center; gap: 0.75rem;" onmouseover="this.style.borderColor='#2e2e2e'" onmouseout="this.style.borderColor='#1f1f1f'">
+          <svg width="28" height="28" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M17.392 2H13.32l4.005 6.596L12.85 2H8.78l3.583 7.24L8.04 2H3.966L8.5 10.482 3.966 22h4.072l3.49-8.144L14.78 22h4.073l-3.808-9.518L19.458 2h-2.066z" fill="#FFD02F"/>
+          </svg>
+          <span style="font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted);">Miro</span>
+        </div>
+
+        <!-- Maze -->
+        <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 4px; padding: 1.25rem 1rem; display: flex; flex-direction: column; align-items: center; gap: 0.75rem;" onmouseover="this.style.borderColor='#2e2e2e'" onmouseout="this.style.borderColor='#1f1f1f'">
+          <svg width="28" height="28" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+            <rect width="64" height="64" rx="12" fill="#6B4FBB"/>
+            <path d="M12 44V20l20 14L52 20v24" stroke="#fff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          </svg>
+          <span style="font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted);">Maze</span>
+        </div>
+
+        <!-- Hotjar -->
+        <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 4px; padding: 1.25rem 1rem; display: flex; flex-direction: column; align-items: center; gap: 0.75rem;" onmouseover="this.style.borderColor='#2e2e2e'" onmouseout="this.style.borderColor='#1f1f1f'">
+          <svg width="28" height="28" viewBox="0 0 192 192" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="96" cy="96" r="96" fill="#FD3A5C"/>
+            <path d="M96 40c-22 0-40 17.9-40 40 0 14.8 8.1 27.8 20 34.9V152h40V114.9c11.9-7.1 20-20.1 20-34.9 0-22.1-17.9-40-40-40zm0 60c-11 0-20-9-20-20s9-20 20-20 20 9 20 20-9 20-20 20z" fill="#fff"/>
+          </svg>
+          <span style="font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted);">Hotjar</span>
+        </div>
+
+        <!-- Microsoft Clarity -->
+        <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 4px; padding: 1.25rem 1rem; display: flex; flex-direction: column; align-items: center; gap: 0.75rem;" onmouseover="this.style.borderColor='#2e2e2e'" onmouseout="this.style.borderColor='#1f1f1f'">
+          <svg width="28" height="28" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+            <rect width="48" height="48" rx="8" fill="#0078D4"/>
+            <path d="M24 8C15.2 8 8 15.2 8 24s7.2 16 16 16 16-7.2 16-16S32.8 8 24 8zm0 28c-6.6 0-12-5.4-12-12S17.4 12 24 12s12 5.4 12 12-5.4 12-12 12z" fill="#fff"/>
+            <circle cx="24" cy="24" r="5" fill="#fff"/>
+          </svg>
+          <span style="font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted);">Clarity</span>
+        </div>
+
+        <!-- Google Analytics -->
+        <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 4px; padding: 1.25rem 1rem; display: flex; flex-direction: column; align-items: center; gap: 0.75rem;" onmouseover="this.style.borderColor='#2e2e2e'" onmouseout="this.style.borderColor='#1f1f1f'">
+          <svg width="28" height="28" viewBox="0 0 192 192" xmlns="http://www.w3.org/2000/svg">
+            <path d="M152 192c-22.1 0-40-17.9-40-40V40c0-22.1 17.9-40 40-40s40 17.9 40 40v112c0 22.1-17.9 40-40 40z" fill="#F9AB00"/>
+            <path d="M96 192c-22.1 0-40-17.9-40-40v-56c0-22.1 17.9-40 40-40s40 17.9 40 40v56c0 22.1-17.9 40-40 40z" fill="#E37400" opacity=".8"/>
+            <circle cx="40" cy="152" r="40" fill="#E37400"/>
+          </svg>
+          <span style="font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted);">GA4</span>
+        </div>
+
+        <!-- Google Analytics / Search Console placeholder para mantener grid -->
+        <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 4px; padding: 1.25rem 1rem; display: flex; flex-direction: column; align-items: center; gap: 0.75rem;" onmouseover="this.style.borderColor='#2e2e2e'" onmouseout="this.style.borderColor='#1f1f1f'">
+          <svg width="28" height="28" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+            <rect width="48" height="48" rx="8" fill="#1f1f1f"/>
+            <path d="M24 10L10 38h28L24 10z" fill="none" stroke="#E2FF00" stroke-width="3" stroke-linejoin="round"/>
+            <circle cx="24" cy="31" r="2.5" fill="#E2FF00"/>
+            <line x1="24" y1="21" x2="24" y2="28" stroke="#E2FF00" stroke-width="3" stroke-linecap="round"/>
+          </svg>
+          <span style="font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted);">Analytics</span>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span class="footer-left">© 2025 Marcos Ruiz Ibáñez</span>
+  <div class="footer-links">
+    <a href="https://www.linkedin.com/in/marcosruizibáñez/" target="_blank">LinkedIn</a>
+    <a href="mailto:marcosruis937@gmail.com">marcosruis937@gmail.com</a>
+  </div>
+</footer>
+
+<script>
+  document.querySelectorAll('.project-card').forEach(card => {
+    card.addEventListener('click', () => {
+      if (card.dataset.link) {
+        window.location.href = card.dataset.link;
+      }
+    });
+  });
+
+  function navScrollTo(id) {
+    const target = document.getElementById(id);
+    if (target) {
+      const top = target.getBoundingClientRect().top + window.pageYOffset - 64;
+      window.scrollTo({ top: top, behavior: 'smooth' });
+    }
+  }
+
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const filter = btn.dataset.filter;
+      document.querySelectorAll('.project-card').forEach(card => {
+        if (filter === 'all' || card.dataset.category === filter) {
+          card.classList.remove('hidden');
+        } else {
+          card.classList.add('hidden');
+        }
+      });
+    });
+  });
+</script>
+
+</body>
 </html>
