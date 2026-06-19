@@ -1776,91 +1776,93 @@
     <p class="section-label">14 — Diseño visual</p>
     <h2 class="section-title">Después, <em>diseñar</em></h2>
 
-    <p class="body-text">Cada decisión visual tiene una justificación funcional. El diseño no es decoración: es la traducción de los insights de investigación en decisiones tangibles.</p>
+    <p class="body-text">Antes de prototipar pantallas construí un UI Kit completo en Figma: tokens de color, tipografía, iconografía y los componentes principales del portal. Tener el kit resuelto antes de maquetar garantizó consistencia entre todas las pantallas y aceleró el prototipado.</p>
+
+    <img src="assets/enaepass/Kit.png" alt="UI Kit Portal del Alumno" style="width:100%; border-radius:6px; border:1px solid var(--border); display:block; margin:2rem 0;">
 
     <div class="divider"></div>
 
-    <h3 style="font-family:'Space Grotesk',sans-serif; font-size:18px; font-weight:600; letter-spacing:-0.02em; margin-bottom:1.5rem;">Layout — Tres capas estructurales</h3>
+    <h3 style="font-family:'Space Grotesk',sans-serif; font-size:18px; font-weight:600; letter-spacing:-0.02em; margin-bottom:1.5rem;">Lo que incluye el kit</h3>
 
-    <div style="display:grid; grid-template-columns: repeat(3,1fr); gap:16px; margin: 1.5rem 0;">
-      <div style="background:var(--surface); border:1px solid var(--border); border-radius:4px; padding:1.5rem;">
-        <p style="font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:var(--accent); margin-bottom:0.5rem;">Sidebar izquierdo</p>
-        <p style="font-size:13px; color:var(--text-secondary); line-height:1.6;">Navegación principal persistente. El benchmark y el testing confirman que el sidebar facilita la orientación en plataformas con mucho contenido y permite escalar sin romper la jerarquía.</p>
+    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin:1.5rem 0 2rem;">
+      <div style="background:var(--surface); border:1px solid var(--border); border-radius:4px; padding:1.25rem;">
+        <p style="font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:var(--accent); margin-bottom:0.5rem;">Identidad</p>
+        <p style="font-size:13px; color:var(--text-secondary); line-height:1.6;">Logos ENAE en todas sus variantes: completo, reducido, blanco y negro. Base de cualquier componente con marca.</p>
       </div>
-      <div style="background:var(--surface); border:1px solid var(--border); border-radius:4px; padding:1.5rem;">
-        <p style="font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:var(--accent); margin-bottom:0.5rem;">Header superior</p>
-        <p style="font-size:13px; color:var(--text-secondary); line-height:1.6;">Contexto del usuario, notificaciones y accesos globales. Punto de anclaje visual constante independiente del contenido que esté en el cuerpo central.</p>
+      <div style="background:var(--surface); border:1px solid var(--border); border-radius:4px; padding:1.25rem;">
+        <p style="font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:var(--accent); margin-bottom:0.5rem;">Colores y tipografía</p>
+        <p style="font-size:13px; color:var(--text-secondary); line-height:1.6;">Tokens de color primario, secundarios y grises. SF UI para encabezados, Open Sans para cuerpo de texto.</p>
       </div>
-      <div style="background:var(--surface); border:1px solid var(--border); border-radius:4px; padding:1.5rem;">
-        <p style="font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:var(--accent); margin-bottom:0.5rem;">Cuerpo central</p>
-        <p style="font-size:13px; color:var(--text-secondary); line-height:1.6;">Grid de 4 columnas con 24px de gutter y 48px de margen lateral. Permite desde grids densos de tarjetas hasta layouts de detalle sin romper la consistencia.</p>
+      <div style="background:var(--surface); border:1px solid var(--border); border-radius:4px; padding:1.25rem;">
+        <p style="font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:var(--accent); margin-bottom:0.5rem;">Componentes</p>
+        <p style="font-size:13px; color:var(--text-secondary); line-height:1.6;">Botones, buscador, cards de contenido, cards de vídeo e iconografía. Listos para ensamblar en cualquier pantalla.</p>
       </div>
     </div>
 
     <div class="divider"></div>
 
-    <h3 style="font-family:'Space Grotesk',sans-serif; font-size:18px; font-weight:600; letter-spacing:-0.02em; margin-bottom:1.5rem;">Sistema de color</h3>
+    <h3 style="font-family:'Space Grotesk',sans-serif; font-size:18px; font-weight:600; letter-spacing:-0.02em; margin-bottom:1.5rem;">Colores</h3>
 
     <div class="color-grid">
       <div class="color-swatch">
         <div class="swatch-color" style="background:#8B1A2F;"></div>
         <div class="swatch-info">
-          <p class="swatch-role">Primario</p>
+          <p class="swatch-role">Primario ENAE</p>
           <p class="swatch-hex">#8B1A2F</p>
         </div>
       </div>
       <div class="color-swatch">
-        <div class="swatch-color" style="background:#111111; border-bottom:1px solid #2e2e2e;"></div>
+        <div class="swatch-color" style="background:#B22240;"></div>
         <div class="swatch-info">
-          <p class="swatch-role">Secundario</p>
-          <p class="swatch-hex">#111111</p>
+          <p class="swatch-role">Primario claro</p>
+          <p class="swatch-hex">#B22240</p>
         </div>
       </div>
       <div class="color-swatch">
-        <div class="swatch-color" style="background:#2E7D32;"></div>
+        <div class="swatch-color" style="background:#1C1C1E; border-bottom:1px solid #2e2e2e;"></div>
         <div class="swatch-info">
-          <p class="swatch-role">Éxito</p>
-          <p class="swatch-hex">#2E7D32</p>
+          <p class="swatch-role">Fondo</p>
+          <p class="swatch-hex">#1C1C1E</p>
         </div>
       </div>
       <div class="color-swatch">
-        <div class="swatch-color" style="background:#F59E0B;"></div>
+        <div class="swatch-color" style="background:#3A3A3C; border-bottom:1px solid #2e2e2e;"></div>
         <div class="swatch-info">
-          <p class="swatch-role">Aviso</p>
-          <p class="swatch-hex">#F59E0B</p>
+          <p class="swatch-role">Superficie</p>
+          <p class="swatch-hex">#3A3A3C</p>
         </div>
       </div>
       <div class="color-swatch">
-        <div class="swatch-color" style="background:#EF4444;"></div>
+        <div class="swatch-color" style="background:#AEAEB2;"></div>
         <div class="swatch-info">
-          <p class="swatch-role">Error</p>
-          <p class="swatch-hex">#EF4444</p>
+          <p class="swatch-role">Texto secundario</p>
+          <p class="swatch-hex">#AEAEB2</p>
         </div>
       </div>
       <div class="color-swatch">
-        <div class="swatch-color" style="background:#3B82F6;"></div>
+        <div class="swatch-color" style="background:#FFFFFF; border:1px solid #2e2e2e;"></div>
         <div class="swatch-info">
-          <p class="swatch-role">Informativo</p>
-          <p class="swatch-hex">#3B82F6</p>
+          <p class="swatch-role">Texto primario</p>
+          <p class="swatch-hex">#FFFFFF</p>
         </div>
       </div>
     </div>
 
-    <p class="body-text"><strong>Decisión clave:</strong> el rojo corporativo se reserva exclusivamente para acciones prioritarias. Esto crea un sistema de jerarquía visual clara donde el usuario siempre identifica el "siguiente paso natural" sin necesidad de leer cada elemento.</p>
+    <p class="body-text"><strong>Decisión clave:</strong> el rojo corporativo de ENAE se reserva para CTAs principales y elementos de navegación activa. El resto de la interfaz usa una escala de grises oscuros para no competir con él — cualquier elemento rojo en pantalla es siempre accionable.</p>
 
     <div class="divider"></div>
 
-    <h3 style="font-family:'Space Grotesk',sans-serif; font-size:18px; font-weight:600; letter-spacing:-0.02em; margin-bottom:1.5rem;">Sistema tipográfico</h3>
+    <h3 style="font-family:'Space Grotesk',sans-serif; font-size:18px; font-weight:600; letter-spacing:-0.02em; margin-bottom:1.5rem;">Tipografía</h3>
 
     <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:1.5rem 0;">
       <div class="type-sample">
         <p class="type-meta" style="margin-bottom:0.75rem;">SF UI Display — Encabezados</p>
         <p class="type-heading">Portal del<br>Alumno</p>
-        <p style="font-size:12px; color:var(--text-muted); margin-top:1rem; line-height:1.5;">Carácter institucional, escaneo rápido de secciones y jerarquía visual.</p>
+        <p style="font-size:12px; color:var(--text-muted); margin-top:1rem; line-height:1.5;">Sistema nativo iOS/macOS. Institucional, familiar para el usuario y con muy buen escaneo a tamaños grandes.</p>
       </div>
       <div class="type-sample">
         <p class="type-meta" style="margin-bottom:0.75rem;">Open Sans — Cuerpo de texto</p>
-        <p style="font-family:'Inter',sans-serif; font-size:16px; color:var(--text-secondary); line-height:1.7;">Alta legibilidad en tamaños pequeños y medianos. Ideal para etiquetas, formularios y contenido académico de alta densidad.</p>
+        <p style="font-family:'Inter',sans-serif; font-size:16px; color:var(--text-secondary); line-height:1.7;">Alta legibilidad en tamaños pequeños. Ideal para etiquetas, formularios y bloques de contenido académico denso.</p>
       </div>
     </div>
 
