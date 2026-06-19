@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Investigación UX — Plataforma de cursos · Marcos Ruiz</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #080808;
+      --surface: #111;
+      --border: #1f1f1f;
+      --border-hover: #333;
+      --accent: #E2FF00;
+      --text-primary: #f0f0f0;
+      --text-secondary: #888;
+      --text-muted: #444;
+    }
+
+    body {
+      background: var(--bg);
+      font-family: 'Inter', sans-serif;
+      color: var(--text-primary);
+      min-height: 100vh;
+    }
+
+    /* NAV */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(8,8,8,0.92); backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 3rem; height: 56px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-back { font-size: 13px; color: var(--text-secondary); text-decoration: none; display: flex; align-items: center; gap: 8px; transition: color 0.2s; }
+    .nav-back:hover { color: var(--text-primary); }
+    .nav-title { font-family: 'Space Grotesk', sans-serif; font-size: 13px; font-weight: 600; color: var(--text-muted); }
+
+    /* HERO */
+    .hero {
+      max-width: 900px; margin: 0 auto;
+      padding: 5rem 3rem 4rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .hero .label {
+      font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 1.5rem; display: block;
+    }
+    .hero h1 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(32px, 5vw, 52px);
+      font-weight: 700; letter-spacing: -0.03em;
+      line-height: 1.1; margin-bottom: 1.5rem;
+    }
+    .hero h1 em { color: var(--accent); font-style: normal; }
+    .hero p {
+      font-size: 16px; color: var(--text-secondary);
+      line-height: 1.7; max-width: 640px; margin-bottom: 2.5rem;
+    }
+    .meta-row {
+      display: flex; gap: 2rem; flex-wrap: wrap;
+    }
+    .meta-item { }
+    .meta-item .ml { font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 4px; }
+    .meta-item .mv { font-size: 13px; color: var(--text-secondary); }
+
+    /* CONTENT WRAPPER */
+    .content { max-width: 900px; margin: 0 auto; padding: 0 3rem; }
+
+    /* SECTIONS */
+    .cs-section { padding: 5rem 0; border-bottom: 1px solid var(--border); }
+    .cs-section:last-child { border-bottom: none; }
+
+    .section-label {
+      font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--text-muted); margin-bottom: 1.5rem; display: block;
+    }
+    .section-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(24px, 3vw, 36px);
+      font-weight: 700; letter-spacing: -0.03em;
+      line-height: 1.15; margin-bottom: 1.5rem;
+    }
+    .section-title em { color: var(--accent); font-style: normal; }
+
+    .body-text {
+      font-size: 15px; color: var(--text-secondary);
+      line-height: 1.75; margin-bottom: 1.5rem;
+    }
+    .body-text strong { color: var(--text-primary); font-weight: 500; }
+
+    .divider { border: none; border-top: 1px solid var(--border); margin: 3rem 0; }
+
+    /* BENCHMARK IMAGES */
+    .benchmark-img {
+      width: 100%; border-radius: 4px;
+      border: 1px solid var(--border-hover);
+      display: block; margin: 2rem 0;
+    }
+    .img-caption {
+      font-size: 11px; color: var(--text-muted);
+      letter-spacing: 0.06em; text-align: center;
+      margin-top: -1.25rem; margin-bottom: 2rem;
+    }
+
+    /* CONTEXT CARDS */
+    .context-grid {
+      display: flex; flex-direction: column; gap: 0;
+      border: 1px solid var(--border); border-radius: 4px; overflow: hidden;
+      margin: 2rem 0;
+    }
+    .context-card {
+      border-bottom: 1px solid var(--border);
+      padding: 0;
+      overflow: hidden;
+    }
+    .context-card:last-child { border-bottom: none; }
+
+    .context-header {
+      display: grid; grid-template-columns: 48px 1fr;
+      gap: 0; cursor: pointer;
+      background: var(--surface);
+      transition: background 0.15s;
+    }
+    .context-header:hover { background: #161616; }
+
+    .context-num {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 11px; font-weight: 700;
+      color: var(--accent); opacity: 0.5;
+      display: flex; align-items: center; justify-content: center;
+      padding: 1.25rem 0;
+      border-right: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+    .context-summary {
+      padding: 1.25rem 1.5rem;
+      display: flex; flex-direction: column; justify-content: center;
+    }
+    .context-name {
+      font-size: 13px; font-weight: 500; color: var(--text-primary);
+      margin-bottom: 4px;
+    }
+    .context-hook {
+      font-size: 12px; color: var(--text-muted); line-height: 1.4;
+    }
+
+    .context-body {
+      display: none;
+      padding: 1.5rem;
+      background: #0c0c0c;
+      border-top: 1px solid var(--border);
+    }
+    .context-body.open { display: block; }
+
+    .context-body p {
+      font-size: 13.5px; color: var(--text-secondary);
+      line-height: 1.75; margin-bottom: 1rem;
+    }
+    .context-body p:last-of-type { margin-bottom: 0; }
+    .context-body strong { color: var(--text-primary); font-weight: 500; }
+
+    .sesgos-block {
+      margin-top: 1.25rem;
+      padding: 1rem 1.25rem;
+      background: rgba(226,255,0,0.04);
+      border: 1px solid rgba(226,255,0,0.12);
+      border-radius: 4px;
+    }
+    .sesgos-label {
+      font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--accent); opacity: 0.7; margin-bottom: 0.75rem; display: block;
+    }
+    .sesgo-row {
+      display: flex; align-items: flex-start; gap: 8px;
+      font-size: 12px; color: #aaa; line-height: 1.4;
+      margin-bottom: 5px;
+    }
+    .sesgo-row:last-child { margin-bottom: 0; }
+    .snum {
+      background: var(--accent); color: #000;
+      font-size: 9px; font-weight: 700;
+      padding: 1px 5px; border-radius: 2px;
+      flex-shrink: 0; margin-top: 1px;
+      font-family: 'Space Grotesk', sans-serif;
+    }
+
+    /* LANDING BIAS MAP */
+    .annotated-layout {
+      display: grid;
+      grid-template-columns: 300px 1fr;
+      gap: 0;
+      position: relative;
+      align-items: start;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+      margin-top: 2rem;
+    }
+
+    .image-col {
+      position: sticky; top: 72px;
+      height: calc(100vh - 100px);
+      overflow-y: scroll;
+      scrollbar-width: thin;
+      scrollbar-color: #222 transparent;
+      border-right: 1px solid var(--border);
+    }
+    .image-col::-webkit-scrollbar { width: 4px; }
+    .image-col::-webkit-scrollbar-thumb { background: #333; border-radius: 2px; }
+    .image-col img { width: 100%; display: block; }
+    .scroll-hint {
+      text-align: center; padding: 0.6rem;
+      font-size: 10px; color: var(--text-muted);
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      position: sticky; bottom: 0;
+    }
+
+    .annotations-col { }
+    .annotation-block {
+      border-bottom: 1px solid var(--border);
+      padding: 1.5rem 2rem;
+      position: relative;
+      transition: background 0.15s;
+    }
+    .annotation-block:hover { background: rgba(226,255,0,0.02); }
+    .annotation-block:last-child { border-bottom: none; }
+    .annotation-block::before {
+      content: ''; position: absolute;
+      left: 0; top: 50%; transform: translateY(-50%);
+      width: 3px; height: 40px;
+      background: var(--accent); border-radius: 0 2px 2px 0;
+      opacity: 0; transition: opacity 0.15s;
+    }
+    .annotation-block:hover::before { opacity: 1; }
+
+    .ann-tag {
+      font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--text-muted); margin-bottom: 0.5rem;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .ann-tag .pct {
+      background: var(--border); color: var(--text-muted);
+      padding: 1px 6px; border-radius: 2px; font-size: 9px;
+    }
+    .ann-name {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 13px; font-weight: 600;
+      color: var(--text-primary); margin-bottom: 1rem;
+    }
+    .bias-rows { display: flex; flex-direction: column; gap: 6px; }
+    .bias-row {
+      display: flex; align-items: flex-start; gap: 8px;
+      font-size: 12px; color: #999; line-height: 1.4;
+    }
+    .bnum {
+      background: var(--accent); color: #000;
+      font-size: 9px; font-weight: 700;
+      padding: 2px 5px; border-radius: 2px;
+      flex-shrink: 0; margin-top: 1px;
+      font-family: 'Space Grotesk', sans-serif;
+    }
+    .bname { color: var(--text-primary); font-weight: 500; }
+
+    /* PULL QUOTE */
+    .pull-quote {
+      border-left: 2px solid var(--accent);
+      padding: 1rem 1.5rem; margin: 2.5rem 0;
+      background: rgba(226,255,0,0.03);
+    }
+    .pull-quote p { font-size: 15px; color: var(--text-secondary); line-height: 1.7; }
+    .pull-quote strong { color: var(--text-primary); }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a class="nav-back" href="portfolio-marcos.html">← Volver</a>
+    <span class="nav-title">Investigación UX — Plataforma de cursos</span>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero">
+    <span class="label">UX Research · Behavioral Design · 2025–2026</span>
+    <h1>Investigación UX —<br>Ventas de <em>plataforma</em><br>de cursos</h1>
+    <p>Cómo aplicar Behavioral Design para convertir ex-alumnos en suscriptores de una plataforma de formación continua. Benchmark competitivo, análisis de contextos de incertidumbre y mapa de sesgos cognitivos aplicados sección a sección.</p>
+    <div class="meta-row">
+      <div class="meta-item">
+        <div class="ml">Rol</div>
+        <div class="mv">UX Researcher · Behavioral Designer</div>
+      </div>
+      <div class="meta-item">
+        <div class="ml">Metodología</div>
+        <div class="mv">Behavioral Design · Benchmark · Análisis de contexto</div>
+      </div>
+      <div class="meta-item">
+        <div class="ml">Herramientas</div>
+        <div class="mv">Figma · FigJam · Notion</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <!-- 01 BENCHMARK -->
+    <section class="cs-section">
+      <span class="section-label">01 — Benchmark</span>
+      <h2 class="section-title">Primero, ver cómo lo <em>resuelven</em> los demás</h2>
+
+      <p class="body-text">Antes de proponer soluciones, analicé en profundidad cómo las principales plataformas del sector resuelven la captación, la exploración de cursos y el proceso de compra. El benchmark cubrió <strong>Domestika, Udemy y Coursera</strong> — cada una con sus propias fortalezas y puntos ciegos.</p>
+
+      <p class="body-text">Para cada plataforma documenté múltiples estados: Home sin login, Home con usuario logado, buscador, página de curso, flujo de compra y planes de suscripción. El objetivo no era solo ver el diseño visual sino entender las <strong>decisiones estratégicas</strong> detrás de cada sección.</p>
+
+      <img src="assets/Landing ENAEPASS/Captura de pantalla 2026-06-18 a las 18.40.07.png" alt="Benchmark Domestika — análisis de estructura" class="benchmark-img">
+      <p class="img-caption">Domestika — análisis de estructura: Home, Home logado, página de curso y buscador</p>
+
+      <img src="assets/Landing ENAEPASS/Captura de pantalla 2026-06-18 a las 18.40.18.png" alt="Benchmark Udemy — análisis de estructura" class="benchmark-img">
+      <p class="img-caption">Udemy — análisis de estructura: Home, buscador, página de curso (compra y no compra), planes y landing de ventas</p>
+
+      <img src="assets/Landing ENAEPASS/Captura de pantalla 2026-06-18 a las 18.40.28.png" alt="Benchmark Coursera — análisis adicional" class="benchmark-img">
+      <p class="img-caption">Análisis complementario — frames adicionales por plataforma con notas de investigación</p>
+
+      <img src="assets/Landing ENAEPASS/Captura de pantalla 2026-06-18 a las 18.40.34.png" alt="Flows de compra — Udemy y Coursera" class="benchmark-img">
+      <p class="img-caption">Flows de compra — mapeo completo del proceso "Comprar curso" en Udemy y Coursera, pantalla a pantalla</p>
+
+      <img src="assets/Landing ENAEPASS/Captura de pantalla 2026-06-18 a las 18.40.48.png" alt="Homes comparados" class="benchmark-img">
+      <p class="img-caption">Comparativa de homes — evolución del diseño entre versiones y estados de usuario</p>
+
+      <img src="assets/Landing ENAEPASS/Captura de pantalla 2026-06-18 a las 18.41.00.png" alt="Flows completos Udemy y Coursera" class="benchmark-img">
+      <p class="img-caption">Udemy y Coursera — onboarding, home, detalle de curso, inscripción y certificación. Flujos completos documentados</p>
+
+      <div class="pull-quote">
+        <p>El benchmark reveló que <strong>ninguna plataforma global resuelve bien la reconexión emocional con la institución de origen</strong>. Coursera y Udemy son masivos e impersonales. Domestika tiene identidad pero no escala alumni. ENAE-PASS ocupa una tierra de nadie con potencial enorme: alto prestigio local + accesibilidad de MOOC.</p>
+      </div>
+    </section>
+
+
+    <!-- 02 CONTEXTOS -->
+    <section class="cs-section">
+      <span class="section-label">02 — Análisis de contexto</span>
+      <h2 class="section-title">Las incertidumbres que la landing<br>tiene que <em>resolver</em></h2>
+
+      <p class="body-text">Antes de diseñar o proponer intervenciones, identifiqué los <strong>8 contextos de incertidumbre</strong> que determinan por qué el usuario no convierte, aunque el producto sea bueno. Cada contexto tiene sus propias barreras y sus propios sesgos activables.</p>
+      <p class="body-text">Pulsa en cada contexto para leer el análisis completo.</p>
+
+      <div class="context-grid">
+
+        <div class="context-card">
+          <div class="context-header" onclick="toggle(this)">
+            <div class="context-num">01</div>
+            <div class="context-summary">
+              <div class="context-name">Contexto General</div>
+              <div class="context-hook">La IA ha convertido la obsolescencia en ansiedad concreta para el profesional senior</div>
+            </div>
+          </div>
+          <div class="context-body">
+            <p>La persona que llega a la landing de ENAE-PASS es un profesional de 32–50 años que hizo un máster en ENAE hace entre 3 y 15 años. Cuando se graduó, sentía que tenía una ventaja competitiva clara: había invertido tiempo, dinero y esfuerzo en formarse, y eso se notaba en las entrevistas, en los ascensos, en cómo le valoraban sus superiores. Hoy esa sensación se ha erosionado. No porque haya dejado de trabajar bien, sino porque el mundo profesional ha cambiado más rápido de lo que nadie anticipaba.</p>
+            <p>La IA generativa ha puesto encima de la mesa una pregunta incómoda que antes solo se hacían los perfiles técnicos: <strong>"¿Cuánto de lo que hago puede hacerlo una máquina mejor y más rápido que yo?"</strong> Para alguien que ha construido su identidad profesional sobre el saber hacer, esa pregunta no es baladí. Es existencial.</p>
+            <p>Pero hay algo más sutil que el miedo a la IA. Este profesional también percibe que las reglas del juego del ascenso y la visibilidad han cambiado. Ahora se valora saber comunicar en LinkedIn, entender de datos aunque no seas analista, hablar de sostenibilidad y ESG aunque dirijas operaciones. Hay un nuevo lenguaje profesional emergente, y si no lo dominas, empiezas a quedar fuera de conversaciones sin darte cuenta.</p>
+            <p>Esta persona no está en crisis profesional. Tiene trabajo, tiene experiencia, tiene red de contactos. Pero nota algo que no sabe nombrar bien: una especie de desfase silencioso entre lo que sabe y lo que el mercado empieza a exigir. Sus compañeros más jóvenes hablan de cosas que él desconoce. Los puestos a los que aspiraría piden competencias que no tiene en el CV. Esa punzada acumulada es lo que le trae a la landing. <strong>No viene buscando cursos. Viene buscando alivio para una ansiedad que lleva meses creciendo en segundo plano.</strong></p>
+            <p>La implicación para la landing es directa: el copy no puede empezar con features. Tiene que empezar con reconocimiento. Con nombrar exactamente esa sensación antes de ofrecer soluciones. Si el usuario siente que la landing "lo entiende", ya ha dado el paso más difícil del funnel.</p>
+            <div class="sesgos-block">
+              <span class="sesgos-label">Sesgos clave</span>
+              <div class="sesgo-row"><span class="snum">11</span> Aversión a la pérdida — el miedo a quedarse atrás supera la aspiración de avanzar; usar "no te quedes atrás" antes de "avanza"</div>
+              <div class="sesgo-row"><span class="snum">21</span> Brecha de empatía — la landing debe nombrar el malestar concreto antes de hablar de features; el usuario necesita sentirse visto</div>
+              <div class="sesgo-row"><span class="snum">31</span> Sesgo de atención — una sola idea principal por sección visible; la ansiedad es el gancho, no el catálogo</div>
+              <div class="sesgo-row"><span class="snum">6</span> Efecto Halo — si la landing te hace sentir comprendido en el hero, ese buen estado de ánimo inicial colorea toda la experiencia posterior</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="context-card">
+          <div class="context-header" onclick="toggle(this)">
+            <div class="context-num">02</div>
+            <div class="context-summary">
+              <div class="context-name">Contexto Económico</div>
+              <div class="context-hook">No compara contra Coursera — compara contra "no gastar nada" y contra el máster que ya pagó</div>
+            </div>
+          </div>
+          <div class="context-body">
+            <p>Esta persona tiene un salario medio-alto. No es que 450€ al año le suponga un problema financiero grave, pero sí le obliga a justificarse internamente. La formación continua vive en una zona gris incómoda: sabe que debería ser necesidad, pero como no tiene una consecuencia inmediata por no hacerla, la mente la clasifica como "deseable pero aplazable". Puede seguir funcionando en el trabajo sin suscribirse. Eso es precisamente el problema.</p>
+            <p>Tiene además un recuerdo económico potente: lo que pagó por el máster. Si pagó 12.000–17.000€, los 450€ de ENAE-PASS le parecen razonables en comparación. Pero ese mismo recuerdo le genera una pregunta incómoda: <strong>"¿No debería bastar con lo que ya pagué?"</strong> Es decir, el máster funciona como âncora hacia abajo en el precio y hacia arriba en la expectativa de retorno. La landing tiene que responder a esa expectativa explícitamente: el máster fue el punto de partida, ENAE-PASS es lo que lo mantiene vigente.</p>
+            <p>Hay otra dimensión económica que la landing a menudo ignora: <strong>FUNDAE</strong>. Si el usuario trabaja en una empresa con cuota de formación bonificable, el coste real puede ser cero. Pero mucha gente no sabe que su empresa tiene crédito disponible, o no sabe cómo gestionarlo. Una landing que lo explica con un párrafo corto y ofrece el trámite resuelto convierte una objeción en un argumento.</p>
+            <p>La barrera principal no es el precio absoluto sino la <strong>incertidumbre del uso</strong>: "¿y si pago y no lo uso?" El encuadre mensual (37,5€/mes = "menos que una cena con un colega") no solo reduce el dolor del pago sino que recalibra la comparación. Ya no es "450€ para algo que igual no uso" sino "37,5€ al mes para estar al día". Son exactamente los mismos euros, pero el primero activa la aversión al riesgo y el segundo la minimiza.</p>
+            <div class="sesgos-block">
+              <span class="sesgos-label">Sesgos clave</span>
+              <div class="sesgo-row"><span class="snum">1</span> Anclaje — el precio de referencia correcto es el máster (12.000–17.000€), no Coursera ni Udemy; mencionarlo explícitamente ancla la percepción de valor</div>
+              <div class="sesgo-row"><span class="snum">19</span> Reencuadre — mostrar precio mensual primero (37,5€) y el anual como opción de "ahorro"; nunca al revés</div>
+              <div class="sesgo-row"><span class="snum">33</span> Precio cero — incluir créditos extra o primer mes gratis activa la psicología del regalo; sentir que "ganas algo" cambia la decisión</div>
+              <div class="sesgo-row"><span class="snum">15</span> Contabilidad mental — "Con aplicar una sola idea a tu trabajo ya amortizas los 450€" traslada el coste de la columna "gasto" a la columna "inversión"</div>
+              <div class="sesgo-row"><span class="snum">32</span> Aversión al riesgo — visibilizar FUNDAE elimina la barrera económica por completo para una parte del público; hacerlo invisible es un error de conversión</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="context-card">
+          <div class="context-header" onclick="toggle(this)">
+            <div class="context-num">03</div>
+            <div class="context-summary">
+              <div class="context-name">Contexto Temporal</div>
+              <div class="context-hook">La objeción más letal no es el precio: es "no voy a tener tiempo"</div>
+            </div>
+          </div>
+          <div class="context-body">
+            <p>El usuario no tiene huecos en su agenda. Sale de casa temprano, vuelve cuando sus hijos ya están cenando, y los fines de semana los protege como puede. Cuando piensa en "volver a estudiar", su mente proyecta automáticamente la experiencia del máster: noches preparando presentaciones, fines de semana en clase, la presión de los exámenes finales. Solo de pensarlo ya se cansa antes de empezar.</p>
+            <p>Lo que la landing tiene que romper no es la objeción racional del tiempo — que "son solo 20 minutos al día" — sino la asociación emocional entre formarse y sacrificar. Esa asociación está tan arraigada que el mensaje de "aprende a tu ritmo" no basta. Hay que mostrar exactamente cómo encaja en su vida real: en el tren, en los 25 minutos de pausa del mediodía, en el rato muerto entre reunión y reunión. <strong>No es formación que compite con su vida. Es formación que cabe dentro de ella.</strong></p>
+            <p>Hay un segundo miedo temporal más profundo y más difícil de articular: el miedo a suscribirse y no usarlo. Este usuario ya ha vivido esa experiencia antes — el gimnasio de enero, la app de idiomas, el curso de Excel de LinkedIn Learning que compró con la mejor intención y tiene el 4% completado. Suscribirse a algo que luego abandonas no solo es dinero perdido. Es una pequeña derrota que te recuerda que no eres la persona organizada y constante que crees ser. <strong>No quiere otra evidencia de que no cumple lo que se propone.</strong></p>
+            <p>La solución no es solo garantizar la cancelación. Es diseñar el onboarding para que el primer momento de valor llegue antes de que haya tenido tiempo de arrepentirse: en los primeros 10 minutos de uso, el usuario ya debe haber consumido algo que le parezca útil aplicar mañana mismo. Si la primera sesión es configurar perfil y leer FAQs, habrá abandonado antes de la segunda semana.</p>
+            <div class="sesgos-block">
+              <span class="sesgos-label">Sesgos clave</span>
+              <div class="sesgo-row"><span class="snum">12</span> Descuento hiperbólico — la recompensa inmediata tiene que llegar antes que cualquier fricción: primer insight útil en los primeros 10 min de uso</div>
+              <div class="sesgo-row"><span class="snum">27</span> Efecto Zeigarnik — mostrar barras de progreso incompletas en el catálogo; el cerebro recuerda tareas a medias y genera urgencia de terminarlas</div>
+              <div class="sesgo-row"><span class="snum">18</span> Anticipación — "En 3 meses habrás completado tu primera ruta" proyecta un yo futuro concreto y alcanzable, no una aspiración vaga</div>
+              <div class="sesgo-row"><span class="snum">32</span> Aversión al riesgo — cancelación en un click, sin formularios ni llamadas; hacerlo difícil crea desconfianza que reduce conversión inicial</div>
+              <div class="sesgo-row"><span class="snum">47</span> Ilusión de control — permitir elegir entre formatos (vídeo, audio, texto) elimina la sensación de que el contenido dicta el ritmo</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="context-card">
+          <div class="context-header" onclick="toggle(this)">
+            <div class="context-num">04</div>
+            <div class="context-summary">
+              <div class="context-name">Contexto Social</div>
+              <div class="context-hook">ENAE tiene un activo que Coursera jamás podrá replicar: una comunidad Alumni real con vínculo emocional</div>
+            </div>
+          </div>
+          <div class="context-body">
+            <p>El ser humano no toma decisiones formativas en el vacío. Las toma mirando de reojo a sus pares. Este usuario se pregunta, aunque no lo verbalice con esas palabras: <strong>"¿Los profesionales de mi nivel están haciendo esto o es cosa de juniors que necesitan curriculum? ¿Mis compañeros de promoción están dentro? ¿Mi jefe lo vería como iniciativa o como señal de que me falta formación?"</strong> Estas preguntas nunca aparecen en una encuesta de producto, pero están presentes en cada momento de duda antes de hacer clic en "suscribirme".</p>
+            <p>Hay una tensión social no resuelta en torno a la formación continua: todo el mundo dice que es imprescindible, pero muy pocos la hacen de forma visible. Si este usuario mira a su alrededor y no ve a nadie de su círculo profesional dentro de la plataforma, leerá esa ausencia como una señal: "quizá no es tan necesario". El FOMO inverso — el miedo a hacer algo que "los de mi nivel" no hacen — es igual de paralizante que el miedo a quedarse fuera.</p>
+            <p>La solución no es solo poner un contador de usuarios. Es hacer la influencia social <em>específica</em> y <em>reconocible</em>. No "miles de profesionales". Sino "487 exalumnos del MBA Executive de la promoción 2018–2020 ya están dentro". Cuanto más cerca esté el testimonio del perfil del usuario —misma escuela, mismo programa, cargo similar, sector parecido— mayor es el impacto. Un director financiero que ve a otro director financiero de su promoción dentro ya no tiene que decidir si es para alguien "como él". Ya lo sabe.</p>
+            <p>Por otro lado, la pertenencia a la comunidad ENAE es un activo que ningún competidor puede replicar. Coursera puede tener millones de usuarios. Udemy puede tener más cursos. Pero ninguno puede decirle a este usuario "tu profesor de Finanzas Corporativas sigue aquí". Volver a ENAE, aunque sea digitalmente, activa una nostalgia productiva. <strong>No es solo formación: es reconexión con una versión de sí mismo que se sentía en crecimiento, con ganas, con energía.</strong> La landing tiene que hacer visible ese vínculo emocional, no solo el catálogo de contenidos.</p>
+            <div class="sesgos-block">
+              <span class="sesgos-label">Sesgos clave</span>
+              <div class="sesgo-row"><span class="snum">2</span> Influencia social — cifra específica + foto + nombre + cargo + año de promoción; la especificidad multiplica la credibilidad</div>
+              <div class="sesgo-row"><span class="snum">43</span> Arrastre — "El plan más elegido por exalumnos del MBA Executive" convierte la decisión mayoritaria en señal de calidad implícita</div>
+              <div class="sesgo-row"><span class="snum">5</span> Compromiso y consistencia — "Eres ENAE Alumni" activa la identidad ya adquirida; formarse con ENAE es coherente con quien ya eres</div>
+              <div class="sesgo-row"><span class="snum">14</span> Efecto Pigmalión — "Diseñado para profesionales que no se conforman con saber lo que ya saben" define al usuario como alguien que aspira; declinarlo sería contradecirse</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="context-card">
+          <div class="context-header" onclick="toggle(this)">
+            <div class="context-num">05</div>
+            <div class="context-summary">
+              <div class="context-name">Contexto Emocional</div>
+              <div class="context-hook">El usuario llega con cuatro emociones simultáneas: nostalgia, ansiedad, ambición y culpa</div>
+            </div>
+          </div>
+          <div class="context-body">
+            <p>El usuario que llega a esta landing no viene en un estado emocional neutro. Viene con cuatro emociones activas al mismo tiempo, y la mayoría de landings solo apela a una de ellas — la ambición — que paradójicamente es la menos urgente de las cuatro.</p>
+            <p>La primera emoción es la <strong>nostalgia</strong>. El tiempo en ENAE fue, para muchos, uno de los periodos más intensos y estimulantes de su vida profesional. Compañeros nuevos, profesores que marcaron, proyectos que sacaban lo mejor de uno. Esa época dejó una huella. Volver a ENAE activa ese recuerdo de forma automática, y la nostalgia bien usada no paraliza — abre. Es la puerta de entrada emocional más segura porque no genera resistencia.</p>
+            <p>La segunda emoción es la <strong>ansiedad</strong>. Ya la hemos tratado en el contexto general, pero a nivel emocional tiene una textura específica: no es el pánico agudo de quien ha perdido el trabajo, sino la ansiedad crónica de bajo grado de quien sabe que debería estar haciendo algo y no lo hace. Esa ansiedad busca resolverse. La landing puede ser la resolución si el copy la nombra antes de ofrecer la solución.</p>
+            <p>La tercera emoción es la <strong>ambición</strong>. Quiere crecer, ascender, liderar proyectos más grandes, que le llamen para conferencias, ser el referente de su área. Esta es la emoción que la mayoría de landings de formación usa como único gancho. El problema es que la ambición sola genera inspiración pero no urgencia. "Podría hacerlo" no se convierte en "lo hago hoy" a menos que haya algo que empuje.</p>
+            <p>La cuarta emoción, la más invisible y la más poderosa, es la <strong>culpa</strong>. Esta persona sabe desde hace meses que debería ponerse al día. Ha cerrado varios emails con "lo miro esta semana" y no lo ha mirado. Ha visto el anuncio de ENAE-PASS al menos dos veces antes de esta visita. Cada vez que lo ha ignorado, se ha añadido una pequeña capa de deuda emocional. <strong>Si la landing le hace sentir que llega tarde o que ha fallado, se cerrará. Si le hace sentir que hoy es el momento perfecto para empezar, se suscribirá.</strong></p>
+            <p>La secuencia emocional correcta para el copy es: nostalgia → reconocimiento de la ansiedad → visión aspiracional → acción sin culpa. No al revés.</p>
+            <div class="sesgos-block">
+              <span class="sesgos-label">Sesgos clave</span>
+              <div class="sesgo-row"><span class="snum">11</span> Aversión a la pérdida — "Tu máster pierde valor cada año que no lo actualizas" activa la ansiedad sin atacar; es un hecho, no una acusación</div>
+              <div class="sesgo-row"><span class="snum">38</span> Heurística de afecto — activar la nostalgia primero pone al usuario en un estado emocional positivo; ese estado mejora la valoración de todo lo que lee después</div>
+              <div class="sesgo-row"><span class="snum">17</span> Regla del clímax y el final — el momento post-suscripción debe ser memorable: un email de bienvenida cuidado, un primer recurso de valor inmediato; la última impresión define la experiencia</div>
+              <div class="sesgo-row"><span class="snum">21</span> Brecha de empatía — hacer visualizar ambos futuros: el malestar de seguir igual en 12 meses vs. la calma de quien ha estado al día todo el año</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="context-card">
+          <div class="context-header" onclick="toggle(this)">
+            <div class="context-num">06</div>
+            <div class="context-summary">
+              <div class="context-name">Contexto de Capacidad</div>
+              <div class="context-hook">El usuario maduro de máster teme en silencio: "¿sabré usar la plataforma?" y "¿podré con el contenido?"</div>
+            </div>
+          </div>
+          <div class="context-body">
+            <p>"Capacidad" tiene dos caras que raramente se tratan juntas pero que operan en paralelo en la mente del usuario.</p>
+            <p>La primera es la capacidad <strong>técnica</strong>: "¿sabré usar la plataforma?" Este usuario no es un nativo digital. Quizá usa con fluidez su correo, Excel y LinkedIn, pero ante una plataforma nueva con paneles, créditos, rutas de aprendizaje y certificados digitales, siente una fricción silenciosa que no va a verbalizar. No va a decir "no sé usarla". Simplemente va a cerrar la pestaña. La landing tiene que anticipar esa fricción mostrando la interfaz antes de la suscripción — no para impresionar, sino para demostrar que es sencilla.</p>
+            <p>La segunda es la capacidad <strong>cognitiva</strong>: "¿podré con el contenido?" Este usuario tiene síndrome del impostor en versión ejecutiva. Ha llegado lejos, pero en el fondo teme que si se pone a estudiar temas nuevos quede en evidencia que no sabe tanto como aparenta. Ver un catálogo de 70 cursos con títulos técnicos puede activar esa inseguridad en lugar de generar ilusión. La solución no es simplificar los contenidos — es presentarlos como extensiones naturales de lo que ya sabe, no como territorios desconocidos.</p>
+            <p>Pero la barrera de capacidad más subestimada es la de la <strong>decisión misma</strong>. Cuando el catálogo muestra 70 cursos sin jerarquía clara, el usuario entra en parálisis: "¿por cuál empiezo?". No porque no quiera aprender, sino porque elegir mal el primer curso es un fracaso anticipado. Si empieza con uno que no le engancha, confirmará que "esto no es para mí". La landing y el onboarding tienen que tomar esa decisión <em>por él</em>, al menos al principio. No elegir es elegir salir.</p>
+            <div class="sesgos-block">
+              <span class="sesgos-label">Sesgos clave</span>
+              <div class="sesgo-row"><span class="snum">9</span> Sobrecarga de elección — mostrar 6–9 cursos destacados con criterio claro ("más valorados por tu perfil"), no el catálogo completo en la landing</div>
+              <div class="sesgo-row"><span class="snum">22</span> Fatiga de decisión — checkout en máximo 3 pasos; cada campo extra del formulario reduce la tasa de completado</div>
+              <div class="sesgo-row"><span class="snum">28</span> Efecto IKEA — onboarding donde el usuario elige 3 áreas prioritarias; lo que uno construye activamente se valora más y se abandona menos</div>
+              <div class="sesgo-row"><span class="snum">47</span> Ilusión de control — filtros, simulador de ruta o test de nivel inicial dan sensación de que la plataforma responde al usuario, no al revés</div>
+              <div class="sesgo-row"><span class="snum">32</span> Aversión al riesgo — garantía de cancelación sin fricción + preview de contenido antes de pagar eliminan el "¿y si no me gusta?"</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="context-card">
+          <div class="context-header" onclick="toggle(this)">
+            <div class="context-num">07</div>
+            <div class="context-summary">
+              <div class="context-name">Contexto Ambiental</div>
+              <div class="context-hook">Llega desde LinkedIn o email Alumni, en móvil, con baja atención. Tiene 5 segundos para enganchar</div>
+            </div>
+          </div>
+          <div class="context-body">
+            <p>El contexto ambiental define las condiciones físicas y de atención en las que el usuario llega a la landing. Y esas condiciones suelen ser mucho peores de lo que asumen los equipos que diseñan desde un Mac con pantalla grande, conexión rápida y concentración plena.</p>
+            <p>Este usuario llega mayoritariamente desde dos canales: un email de la lista Alumni — que abre entre reunión y reunión, en móvil, en vertical — o un anuncio en LinkedIn que interrumpió su scroll de noticias. En ambos casos, <strong>el nivel de atención disponible es bajo y el umbral de abandono es altísimo</strong>. No está buscando ENAE-PASS. Se lo ha encontrado. Y en ese primer instante, la landing tiene 5 segundos para justificar que merece los siguientes 30.</p>
+            <p>Las condiciones físicas importan más de lo que parece. Si llega en el metro, hay ruido ambiental y la pantalla está en ángulo. Si llega en una pausa del trabajo, tiene media cabeza en lo que ha dejado pendiente. Si llega de noche en el sofá, tiene baja energía para procesar argumentos complejos. La landing no puede asumir un usuario sentado, tranquilo y con tiempo. Tiene que funcionar para el usuario de pie en el andén con el pulgar listo para scrollear.</p>
+            <p>Esto tiene consecuencias de diseño concretas: el hero tiene que ser legible en 3 segundos sin leer el copy completo. El CTA principal tiene que ser visible sin hacer scroll. Los testimonios tienen que ser escaneables, no párrafos. El precio tiene que estar en un lugar predecible. Y la carga tiene que ser instantánea — <strong>cada segundo extra de carga cuesta aproximadamente un 7% de conversión</strong>, y en móvil ese efecto se amplifica.</p>
+            <p>Hay además un aspecto ambiental menos obvio: el <em>contexto cognitivo</em> en el que llega. Si viene de leer malas noticias o de una reunión frustrante, su umbral de decisión está más alto. Si viene de una conversación inspiradora o de ver el perfil de LinkedIn de alguien que ha ascendido, está más receptivo. La landing no controla ese estado, pero puede diseñarse para funcionar en el peor escenario posible, no solo en el mejor.</p>
+            <div class="sesgos-block">
+              <span class="sesgos-label">Sesgos clave</span>
+              <div class="sesgo-row"><span class="snum">31</span> Sesgo de atención — una sola idea principal por pantalla visible; el cerebro filtra todo lo que no compite por el foco</div>
+              <div class="sesgo-row"><span class="snum">25</span> Von Restorff — un único elemento visualmente diferenciado por sección; si todo destaca, nada destaca</div>
+              <div class="sesgo-row"><span class="snum">37</span> Primacía — el beneficio principal legible en menos de 3 segundos; si el hero requiere leer, ya has perdido al usuario de metro</div>
+              <div class="sesgo-row"><span class="snum">13</span> Posición en serie — los argumentos más fuertes al inicio y al final; los del medio se recuerdan menos; nunca poner el precio solo en el medio</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="context-card">
+          <div class="context-header" onclick="toggle(this)">
+            <div class="context-num">08</div>
+            <div class="context-summary">
+              <div class="context-name">Contexto Ético y moral</div>
+              <div class="context-hook">El punto más delicado: transparencia total en créditos, renovaciones y cancelaciones</div>
+            </div>
+          </div>
+          <div class="context-body">
+            <p>El contexto ético es el más delicado y el más subestimado. La mayoría de landings lo ignoran por completo y pagan el precio en forma de desconfianza silenciosa que el usuario nunca verbaliza pero que le impide convertir.</p>
+            <p>Este usuario lleva años expuesto a dark patterns: suscripciones que se renuevan sin avisar, "cancela cuando quieras" que en realidad requieren llamar a un número de atención al cliente, precios que no incluyen IVA hasta el último paso del checkout, créditos que caducan sin que nadie lo mencionara en la landing. Ha sido quemado antes. Y aunque no lo piense conscientemente, esa acumulación de experiencias ha creado un filtro de desconfianza activo que analiza cada sección de la landing buscando señales de trampa.</p>
+            <p>Para ENAE-PASS específicamente hay tres zonas de fricción ética que necesitan respuesta explícita:</p>
+            <p>La primera es el <strong>modelo de créditos</strong>. Si el usuario no entiende exactamente cómo funcionan los créditos, cuándo caducan y qué pasa si no los usa, interpretará la ambigüedad en su contra. El punto más delicado es el rollover: si se comunica como "pierdes los créditos no usados al no renovar" genera percepción de abuso; si se reformula como "tus créditos se mantienen activos mientras tu suscripción esté vigente" genera percepción de beneficio. <strong>Mismo mecanismo, resultado emocional completamente opuesto.</strong></p>
+            <p>La segunda es la <strong>renovación automática</strong>. El usuario sabe que casi todas las plataformas renuevan automáticamente. No le sorprende, pero quiere saber que ENAE lo hace de forma transparente: aviso con tiempo, proceso de cancelación sin fricción, sin cobros sorpresa. Si la landing menciona esto proactivamente — antes de que el usuario tenga que preguntar — la transparencia se convierte en argumento de venta, no en punto de fricción.</p>
+            <p>La tercera es la <strong>justificación personal</strong>. Especialmente si el usuario tiene familia, hay una pregunta implícita: "¿Estoy siendo responsable gastando 450€ en mí mismo?" La landing no puede responder directamente a esa pregunta sin parecer condescendiente, pero sí puede enmarcar la suscripción como inversión profesional — algo que beneficia al equipo, a la empresa, al proyecto de vida familiar — no solo como gasto en desarrollo personal.</p>
+            <div class="sesgos-block">
+              <span class="sesgos-label">Sesgos clave</span>
+              <div class="sesgo-row"><span class="snum">3</span> Reciprocidad — dar valor antes de pedir la compra (guía gratuita, primer módulo desbloqueado sin registro) genera deuda emocional positiva y baja la guardia</div>
+              <div class="sesgo-row"><span class="snum">24</span> Confianza — cancelación en un click + aviso explícito 30 días antes de la renovación; la transparencia proactiva convierte una obligación legal en ventaja competitiva</div>
+              <div class="sesgo-row"><span class="snum">19</span> Reencuadre — comunicar el rollover siempre en positivo: "tus créditos se mantienen mientras estés suscrito", nunca "pierdes los créditos si cancelas"</div>
+              <div class="sesgo-row"><span class="snum">45</span> Efecto de dotación — una vez el usuario ha accedido aunque sea a contenido gratuito, percibe que ya tiene algo que perder; la cancelación se vuelve más costosa emocionalmente</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- 03 MAPA DE SESGOS -->
+    <section class="cs-section">
+      <span class="section-label">03 — Mapa de sesgos</span>
+      <h2 class="section-title">Qué sesgo activa cada sección<br>de la <em>landing actual</em></h2>
+
+      <p class="body-text">Con los contextos identificados, analicé la landing de ENAE-PASS sección a sección para mapear qué sesgos están ya presentes, cuáles faltan y dónde hay oportunidades de mejora.</p>
+
+      <div class="annotated-layout">
+        <div class="image-col">
+          <img src="assets/Landing ENAEPASS/landign.jpg" alt="Landing ENAE-PASS">
+          <div class="scroll-hint">↕ Scroll para ver la landing completa</div>
+        </div>
+        <div class="annotations-col">
+
+          <div class="annotation-block">
+            <div class="ann-tag">Hero <span class="pct">0–12%</span></div>
+            <div class="ann-name">"La tranquilidad de NO quedarse atrás"</div>
+            <div class="bias-rows">
+              <div class="bias-row"><span class="bnum">11</span><span><span class="bname">Aversión a la pérdida</span> — "NO quedarse atrás" activa el miedo antes que la aspiración</span></div>
+              <div class="bias-row"><span class="bnum">21</span><span><span class="bname">Brecha de empatía</span> — nombra el malestar latente antes de hablar de features</span></div>
+              <div class="bias-row"><span class="bnum">37</span><span><span class="bname">Primacía</span> — beneficio identitario legible en menos de 3 segundos</span></div>
+              <div class="bias-row"><span class="bnum">38</span><span><span class="bname">Heurística de afecto</span> — copy emocional genera el estado mental correcto antes del CTA</span></div>
+            </div>
+          </div>
+
+          <div class="annotation-block">
+            <div class="ann-tag">Features <span class="pct">12–20%</span></div>
+            <div class="ann-name">"+30 cursos disponibles desde el día 1 · A tu ritmo"</div>
+            <div class="bias-rows">
+              <div class="bias-row"><span class="bnum">12</span><span><span class="bname">Descuento hiperbólico</span> — "desde el día 1" reduce la distancia temporal percibida</span></div>
+              <div class="bias-row"><span class="bnum">47</span><span><span class="bname">Ilusión de control</span> — "a tu ritmo" elimina la objeción del compromiso fijo</span></div>
+              <div class="bias-row"><span class="bnum">18</span><span><span class="bname">Anticipación</span> — el catálogo visible antes de la compra proyecta el valor futuro</span></div>
+            </div>
+          </div>
+
+          <div class="annotation-block">
+            <div class="ann-tag">Objeción tiempo <span class="pct">20–35%</span></div>
+            <div class="ann-name">"Seguir al día no debería quitarte tiempo, energía ni calma"</div>
+            <div class="bias-rows">
+              <div class="bias-row"><span class="bnum">19</span><span><span class="bname">Reencuadre</span> — reformula "estudiar" como algo que encaja en la vida real</span></div>
+              <div class="bias-row"><span class="bnum">27</span><span><span class="bname">Efecto Zeigarnik</span> — progreso visible en bloques cortos genera urgencia de completar</span></div>
+              <div class="bias-row"><span class="bnum">32</span><span><span class="bname">Aversión al riesgo</span> — "cancela cuando quieras" neutraliza el miedo al lock-in</span></div>
+            </div>
+          </div>
+
+          <div class="annotation-block">
+            <div class="ann-tag">Aval institucional <span class="pct">28–40%</span></div>
+            <div class="ann-name">Certificado · Universidad · Acreditaciones</div>
+            <div class="bias-rows">
+              <div class="bias-row"><span class="bnum">44</span><span><span class="bname">Autoridad</span> — legitimidad académica transferida desde el máster al PASS</span></div>
+              <div class="bias-row"><span class="bnum">6</span><span><span class="bname">Efecto Halo</span> — el prestigio del máster original se hereda íntegro</span></div>
+              <div class="bias-row"><span class="bnum">20</span><span><span class="bname">Priming</span> — imagen del campus ancla la asociación "ENAE de verdad, no MOOC"</span></div>
+            </div>
+          </div>
+
+          <div class="annotation-block">
+            <div class="ann-tag">Social proof <span class="pct">40–55%</span></div>
+            <div class="ann-name">"+18.000 alumnos ya eligieron" · Fotos · Logos empresas</div>
+            <div class="bias-rows">
+              <div class="bias-row"><span class="bnum">2</span><span><span class="bname">Influencia social</span> — cifra específica + foto + nombre + cargo elimina el riesgo percibido</span></div>
+              <div class="bias-row"><span class="bnum">43</span><span><span class="bname">Arrastre</span> — logos de Amazon, Microsoft, Repsol comunican "aquí están los que avanzan"</span></div>
+              <div class="bias-row"><span class="bnum">5</span><span><span class="bname">Compromiso y consistencia</span> — "Eres Alumni, sigue siéndolo" apela a identidad ya adquirida</span></div>
+            </div>
+          </div>
+
+          <div class="annotation-block">
+            <div class="ann-tag">Proceso <span class="pct">55–62%</span></div>
+            <div class="ann-name">"Tu rutina formativa en 3 pasos"</div>
+            <div class="bias-rows">
+              <div class="bias-row"><span class="bnum">9</span><span><span class="bname">Sobrecarga de elección</span> — simplificar a 3 pasos elimina la parálisis por análisis</span></div>
+              <div class="bias-row"><span class="bnum">22</span><span><span class="bname">Fatiga de decisión</span> — checkout en máximo 3 pasos reduce el abandono</span></div>
+              <div class="bias-row"><span class="bnum">12</span><span><span class="bname">Descuento hiperbólico</span> — "Empieza en 2 minutos" hace la recompensa inmediata</span></div>
+            </div>
+          </div>
+
+          <div class="annotation-block">
+            <div class="ann-tag">Catálogo <span class="pct">62–72%</span></div>
+            <div class="ann-name">"Empieza por lo que está cambiando tu sector"</div>
+            <div class="bias-rows">
+              <div class="bias-row"><span class="bnum">28</span><span><span class="bname">Efecto IKEA</span> — el usuario construye su ruta eligiendo áreas → más compromiso</span></div>
+              <div class="bias-row"><span class="bnum">47</span><span><span class="bname">Ilusión de control</span> — los filtros activan la sensación de que el catálogo responde a él</span></div>
+              <div class="bias-row"><span class="bnum">9</span><span><span class="bname">Sobrecarga de elección</span> — muestra 6–9 cursos destacados, no el catálogo de 70+</span></div>
+            </div>
+          </div>
+
+          <div class="annotation-block">
+            <div class="ann-tag">Profesores <span class="pct">72–82%</span></div>
+            <div class="ann-name">"Los profesores que te marcaron. Ahora con lo que necesitas hoy."</div>
+            <div class="bias-rows">
+              <div class="bias-row"><span class="bnum">6</span><span><span class="bname">Efecto Halo</span> — reconocer caras del máster activa nostalgia y confianza automática</span></div>
+              <div class="bias-row"><span class="bnum">38</span><span><span class="bname">Heurística de afecto</span> — caras familiares generan buen humor justo antes del precio</span></div>
+              <div class="bias-row"><span class="bnum">3</span><span><span class="bname">Reciprocidad</span> — "los que ya te dieron mucho, ahora te dan más" baja la guardia</span></div>
+            </div>
+          </div>
+
+          <div class="annotation-block">
+            <div class="ann-tag">Precio <span class="pct">82–92%</span></div>
+            <div class="ann-name">"Menos de un café al día" · Plan Anual · FUNDAE</div>
+            <div class="bias-rows">
+              <div class="bias-row"><span class="bnum">1</span><span><span class="bname">Anclaje</span> — referencia mental es el máster (12.000€), no Coursera (399€/año)</span></div>
+              <div class="bias-row"><span class="bnum">19</span><span><span class="bname">Reencuadre</span> — precio mensual (37,5€) primero; anual como "ahorro"</span></div>
+              <div class="bias-row"><span class="bnum">33</span><span><span class="bname">Precio cero</span> — 2 créditos extra gratis en pago anual activa la lógica del regalo</span></div>
+              <div class="bias-row"><span class="bnum">15</span><span><span class="bname">Contabilidad mental</span> — "recuperas la cuota con UNA sola idea aplicada en el trabajo"</span></div>
+            </div>
+          </div>
+
+          <div class="annotation-block">
+            <div class="ann-tag">FAQ + CTA final <span class="pct">92–100%</span></div>
+            <div class="ann-name">"Todo lo que tienes que saber" · "Da el siguiente paso"</div>
+            <div class="bias-rows">
+              <div class="bias-row"><span class="bnum">24</span><span><span class="bname">Confianza</span> — "Te avisamos 30 días antes de cada renovación, sin sorpresas"</span></div>
+              <div class="bias-row"><span class="bnum">25</span><span><span class="bname">Von Restorff</span> — un único CTA visualmente aislado, sin competencia</span></div>
+              <div class="bias-row"><span class="bnum">13</span><span><span class="bname">Posición en serie</span> — el beneficio emocional principal se repite al final del scroll</span></div>
+              <div class="bias-row"><span class="bnum">11</span><span><span class="bname">Aversión a la pérdida</span> — "Da el siguiente paso" implica que no darlo tiene un coste</span></div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <script>
+    function toggle(header) {
+      const body = header.nextElementSibling;
+      body.classList.toggle('open');
+    }
+  </script>
+
+</body>
+</html>

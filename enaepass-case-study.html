@@ -1,0 +1,2210 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portal del Alumno · Marcos Ruiz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #080808;
+    --surface: #111111;
+    --surface-hover: #181818;
+    --border: #1f1f1f;
+    --border-hover: #2e2e2e;
+    --text-primary: #F0F0ED;
+    --text-secondary: #888880;
+    --text-muted: #444440;
+    --accent: #E2FF00;
+    --accent-dim: rgba(226,255,0,0.08);
+    --red: #8B1A2F;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text-primary);
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 3rem;
+    height: 64px;
+    border-bottom: 1px solid var(--border);
+    background: rgba(8,8,8,0.9);
+    backdrop-filter: blur(12px);
+  }
+
+  .nav-logo {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: -0.02em;
+    color: var(--text-primary);
+    text-decoration: none;
+  }
+
+  .nav-back {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 13px;
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: color 0.2s;
+    letter-spacing: 0.02em;
+  }
+
+  .nav-back:hover { color: var(--accent); }
+
+  .nav-back svg { transition: transform 0.2s; }
+  .nav-back:hover svg { transform: translateX(-3px); }
+
+  /* HERO CASE */
+  .case-hero {
+    padding: 120px 3rem 80px;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .case-hero-inner {
+    max-width: 900px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero-grid-bg {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(var(--border) 1px, transparent 1px),
+      linear-gradient(90deg, var(--border) 1px, transparent 1px);
+    background-size: 80px 80px;
+    opacity: 0.2;
+    pointer-events: none;
+  }
+
+  .case-chips {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 2rem;
+  }
+
+  .chip {
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    border: 1px solid var(--border-hover);
+    padding: 5px 12px;
+    border-radius: 2px;
+  }
+
+  .chip.accent {
+    color: var(--accent);
+    border-color: rgba(226,255,0,0.3);
+  }
+
+  .case-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(40px, 6vw, 80px);
+    font-weight: 700;
+    letter-spacing: -0.04em;
+    line-height: 0.95;
+    margin-bottom: 1.5rem;
+    color: #fff;
+  }
+
+  .case-title span { color: var(--accent); }
+
+  .case-subtitle {
+    font-size: 18px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    max-width: 640px;
+    margin-bottom: 3rem;
+  }
+
+  .case-meta-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .meta-block {}
+  .meta-label {
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 0.4rem;
+  }
+  .meta-value {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+  }
+
+  /* HERO VISUAL */
+  .case-hero-visual {
+    margin-top: 4rem;
+    background: linear-gradient(135deg, #0a0a1a 0%, #12122a 50%, #0a180a 100%);
+    border: 1px solid var(--border-hover);
+    border-radius: 4px;
+    height: 420px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-visual-text {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(48px, 8vw, 120px);
+    font-weight: 700;
+    letter-spacing: -0.05em;
+    color: var(--accent);
+    opacity: 0.85;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero-visual-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(226,255,0,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(226,255,0,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+
+  /* CONTENT */
+  .case-content {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 3rem;
+  }
+
+  /* SECTION */
+  .cs-section {
+    padding: 5rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .cs-section:last-child { border-bottom: none; }
+
+  .section-label {
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  .section-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(28px, 4vw, 44px);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1.0;
+    margin-bottom: 2rem;
+  }
+
+  .section-title em {
+    font-style: normal;
+    color: var(--accent);
+  }
+
+  .body-text {
+    font-size: 15px;
+    color: var(--text-secondary);
+    line-height: 1.8;
+    margin-bottom: 1.5rem;
+  }
+
+  .body-text strong {
+    color: var(--text-primary);
+    font-weight: 500;
+  }
+
+  /* HIGHLIGHT QUOTE */
+  .pull-quote {
+    border-left: 3px solid var(--accent);
+    padding: 1.5rem 2rem;
+    margin: 2.5rem 0;
+    background: var(--accent-dim);
+    border-radius: 0 4px 4px 0;
+  }
+
+  .pull-quote p {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 1.5;
+    color: var(--text-primary);
+    letter-spacing: -0.01em;
+  }
+
+  /* INSIGHT CARDS */
+  .insight-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin: 2.5rem 0;
+  }
+
+  .insight-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 1.5rem;
+  }
+
+  .insight-num {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--accent);
+    opacity: 0.4;
+    line-height: 1;
+    margin-bottom: 0.75rem;
+  }
+
+  .insight-text {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+
+  .insight-text strong {
+    display: block;
+    color: var(--text-primary);
+    font-size: 14px;
+    margin-bottom: 0.4rem;
+  }
+
+  /* TABLE */
+  .cs-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 2rem 0;
+    font-size: 13px;
+  }
+
+  .cs-table th {
+    text-align: left;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid var(--border-hover);
+  }
+
+  .cs-table td {
+    padding: 1rem 1rem;
+    border-bottom: 1px solid var(--border);
+    color: var(--text-secondary);
+    vertical-align: top;
+    line-height: 1.55;
+  }
+
+  .cs-table tr:last-child td { border-bottom: none; }
+
+  .cs-table td:first-child {
+    color: var(--text-primary);
+    font-weight: 500;
+    white-space: nowrap;
+    padding-right: 1.5rem;
+  }
+
+  .badge {
+    display: inline-block;
+    font-size: 10px;
+    letter-spacing: 0.06em;
+    padding: 3px 8px;
+    border-radius: 2px;
+    text-transform: uppercase;
+  }
+
+  .badge-red { background: rgba(239,68,68,0.15); color: #f87171; }
+  .badge-orange { background: rgba(249,115,22,0.12); color: #fb923c; }
+  .badge-yellow { background: rgba(234,179,8,0.12); color: #fbbf24; }
+  .badge-green { background: rgba(34,197,94,0.12); color: #4ade80; }
+
+  /* JOURNEY */
+  .journey-row {
+    display: grid;
+    grid-template-columns: 120px 1fr 1.2fr 80px 1.2fr;
+    gap: 1rem;
+    padding: 1.25rem 0;
+    border-bottom: 1px solid var(--border);
+    align-items: start;
+    font-size: 13px;
+  }
+
+  .journey-row.header {
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    padding-bottom: 0.75rem;
+  }
+
+  .journey-phase {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  /* IA TREE */
+  .ia-block {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 2rem;
+    margin: 2rem 0;
+  }
+
+  .ia-section-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--accent);
+    margin-bottom: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .ia-items {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    padding-left: 1.5rem;
+  }
+
+  .ia-item {
+    font-size: 13px;
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .ia-item::before {
+    content: '—';
+    color: var(--text-muted);
+    font-size: 11px;
+  }
+
+  /* FLOW */
+  .flow-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 1.5rem 2rem;
+    margin: 1.5rem 0;
+  }
+
+  .flow-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1rem;
+  }
+
+  .flow-steps {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0;
+    align-items: center;
+  }
+
+  .flow-step {
+    font-size: 12px;
+    color: var(--text-secondary);
+    background: var(--bg);
+    border: 1px solid var(--border);
+    padding: 6px 12px;
+    border-radius: 2px;
+    white-space: nowrap;
+  }
+
+  .flow-arrow {
+    color: var(--text-muted);
+    font-size: 14px;
+    padding: 0 6px;
+  }
+
+  /* KPI GRID */
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin: 2rem 0;
+  }
+
+  .kpi-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .kpi-metric {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--accent);
+    line-height: 1;
+  }
+
+  .kpi-label {
+    font-size: 12px;
+    color: var(--text-muted);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .kpi-desc {
+    font-size: 12px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+    margin-top: 0.25rem;
+  }
+
+  /* PERSONA */
+  .persona-card {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 2.5rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 2rem;
+    margin: 2rem 0;
+  }
+
+  .persona-avatar {
+    width: 100%;
+    aspect-ratio: 1;
+    background: linear-gradient(135deg, #1a1a2e, #0a1a0a);
+    border: 1px solid var(--border-hover);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 4rem;
+  }
+
+  .persona-name {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+  }
+
+  .persona-role {
+    font-size: 13px;
+    color: var(--accent);
+    margin-bottom: 1.5rem;
+    letter-spacing: 0.03em;
+  }
+
+  .persona-attrs {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .persona-attr {
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    gap: 1rem;
+    font-size: 13px;
+  }
+
+  .attr-label {
+    color: var(--text-muted);
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding-top: 1px;
+  }
+
+  .attr-value { color: var(--text-secondary); line-height: 1.5; }
+
+  /* COLOR PALETTE */
+  .color-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 12px;
+    margin: 2rem 0;
+  }
+
+  .color-swatch {
+    border-radius: 4px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+  }
+
+  .swatch-color {
+    height: 64px;
+  }
+
+  .swatch-info {
+    padding: 0.75rem;
+    background: var(--surface);
+  }
+
+  .swatch-role {
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 0.2rem;
+  }
+
+  .swatch-hex {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-secondary);
+  }
+
+  /* FINDINGS */
+  .finding-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin: 2rem 0;
+  }
+
+  .finding-item {
+    display: grid;
+    grid-template-columns: 24px 1fr;
+    gap: 1rem;
+    align-items: start;
+    padding: 1.25rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+  }
+
+  .finding-badge {
+    font-size: 16px;
+    margin-top: 1px;
+  }
+
+  .finding-title {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-primary);
+    margin-bottom: 0.35rem;
+  }
+
+  .finding-detail {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.55;
+  }
+
+  /* ITERATION */
+  .iteration-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin: 2rem 0;
+  }
+
+  .iteration-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .iteration-phase {
+    background: var(--border);
+    padding: 0.75rem 1rem;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  .iteration-phase.hi { background: rgba(226,255,0,0.08); color: var(--accent); }
+
+  .iteration-body {
+    padding: 1.25rem;
+  }
+
+  .iteration-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+
+  .iteration-desc {
+    font-size: 12px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+
+  /* LEARNINGS */
+  .learning-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin: 2rem 0;
+  }
+
+  .learning-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 1.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .learning-icon {
+    font-size: 2rem;
+    opacity: 0.7;
+  }
+
+  .learning-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 1.3;
+  }
+
+  .learning-desc {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+
+  /* CTA */
+  .case-cta {
+    padding: 6rem 3rem;
+    text-align: center;
+    border-top: 1px solid var(--border);
+  }
+
+  .cta-label {
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 1.5rem;
+  }
+
+  .cta-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(28px, 4vw, 48px);
+    font-weight: 700;
+    letter-spacing: -0.04em;
+    margin-bottom: 2rem;
+  }
+
+  .cta-btns {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    display: inline-block;
+    font-size: 13px;
+    font-weight: 600;
+    font-family: 'Inter', sans-serif;
+    color: var(--bg);
+    background: var(--accent);
+    padding: 12px 28px;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: opacity 0.2s;
+    letter-spacing: 0.02em;
+  }
+
+  .btn-primary:hover { opacity: 0.85; }
+
+  .btn-secondary {
+    display: inline-block;
+    font-size: 13px;
+    font-family: 'Inter', sans-serif;
+    color: var(--text-secondary);
+    background: transparent;
+    border: 1px solid var(--border-hover);
+    padding: 12px 28px;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+
+  .btn-secondary:hover {
+    border-color: var(--text-muted);
+    color: var(--text-primary);
+  }
+
+  /* PROBLEM STATEMENT */
+  .problem-statement {
+    background: var(--surface);
+    border: 1px solid var(--border-hover);
+    border-radius: 4px;
+    padding: 2rem 2.5rem;
+    margin: 2rem 0;
+    position: relative;
+  }
+
+  .problem-statement::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 4px;
+    height: 100%;
+    background: var(--accent);
+    border-radius: 4px 0 0 4px;
+  }
+
+  .problem-statement p {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 17px;
+    font-weight: 500;
+    line-height: 1.6;
+    color: var(--text-primary);
+    letter-spacing: -0.01em;
+    padding-left: 0.5rem;
+  }
+
+  /* IA GRID */
+  .ia-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    margin: 2rem 0;
+  }
+
+  /* DIVIDER */
+  .divider {
+    height: 1px;
+    background: var(--border);
+    margin: 2rem 0;
+  }
+
+  /* TYPOGRAPHY SAMPLE */
+  .type-sample {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 2rem;
+    margin: 1rem 0;
+  }
+
+  .type-heading {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 36px;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1.0;
+    margin-bottom: 0.5rem;
+  }
+
+  .type-meta {
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  /* BENCHMARK TABLE */
+  .benchmark-row {
+    display: grid;
+    grid-template-columns: 180px 1fr 1fr;
+    gap: 1rem;
+    padding: 1.25rem 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 13px;
+    align-items: start;
+  }
+
+  .benchmark-row.header {
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  .benchmark-name {
+    font-weight: 500;
+    color: var(--text-primary);
+  }
+
+  .benchmark-cell { color: var(--text-secondary); line-height: 1.55; }
+
+  /* IMAGES */
+  .case-img {
+    width: 100%;
+    border-radius: 4px;
+    border: 1px solid var(--border-hover);
+    display: block;
+    margin: 2rem 0;
+  }
+
+  .case-img-caption {
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 0.06em;
+    text-align: center;
+    margin-top: -1.25rem;
+    margin-bottom: 2rem;
+  }
+
+  .case-img-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin: 2rem 0;
+  }
+
+  .case-img-grid img {
+    width: 100%;
+    border-radius: 4px;
+    border: 1px solid var(--border-hover);
+    display: block;
+  }
+
+  /* FOOTER */
+  .case-footer {
+    padding: 2.5rem 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .footer-left { font-size: 13px; color: var(--text-muted); }
+
+  .footer-links {
+    display: flex;
+    gap: 2rem;
+  }
+
+  .footer-links a {
+    font-size: 13px;
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .footer-links a:hover { color: var(--accent); }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    nav { padding: 0 1.5rem; }
+    .case-hero, .case-content { padding-left: 1.5rem; padding-right: 1.5rem; }
+    .case-meta-grid { grid-template-columns: 1fr 1fr; }
+    .insight-grid, .kpi-grid, .learning-grid, .iteration-grid { grid-template-columns: 1fr; }
+    .persona-card { grid-template-columns: 1fr; }
+    .persona-avatar { aspect-ratio: 3/1; }
+    .color-grid { grid-template-columns: repeat(3, 1fr); }
+    .ia-grid { grid-template-columns: 1fr; }
+    .journey-row { grid-template-columns: 1fr; gap: 0.5rem; }
+    .benchmark-row { grid-template-columns: 1fr; }
+    .flow-steps { gap: 4px; }
+    .case-cta { padding: 4rem 1.5rem; }
+    .case-footer { padding: 2rem 1.5rem; }
+    .case-img-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="portfolio-marcos.html" class="nav-logo">MR.</a>
+  <a href="portfolio-marcos.html" class="nav-back">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    Volver al portfolio
+  </a>
+</nav>
+
+<!-- HERO -->
+<section class="case-hero">
+  <div class="hero-grid-bg"></div>
+  <div class="case-hero-inner">
+    <div class="case-chips">
+      <span class="chip accent">TFM · Máster UX/UI</span>
+      <span class="chip">UX Research</span>
+      <span class="chip">Arquitectura de Información</span>
+      <span class="chip">UI Design</span>
+      <span class="chip">Usability Testing</span>
+    </div>
+
+    <h1 class="case-title">Portal del<br><span>Alumno</span></h1>
+
+    <p class="case-subtitle">De la fricción administrativa a la autonomía del estudiante: diseño centrado en el usuario para un ecosistema académico digital.</p>
+
+    <div class="case-meta-grid">
+      <div class="meta-block">
+        <p class="meta-label">Rol</p>
+        <p class="meta-value">UX/UI Designer · UX Researcher</p>
+      </div>
+      <div class="meta-block">
+        <p class="meta-label">Duración</p>
+        <p class="meta-value">3 meses · TFM Máster UX/UI</p>
+      </div>
+      <div class="meta-block">
+        <p class="meta-label">Herramientas</p>
+        <p class="meta-value">Figma · FigJam · Maze · Google Forms · Notion</p>
+      </div>
+      <div class="meta-block">
+        <p class="meta-label">Metodología</p>
+        <p class="meta-value">Design Thinking · Double Diamond · Jobs To Be Done</p>
+      </div>
+      <div class="meta-block">
+        <p class="meta-label">Tipo de proyecto</p>
+        <p class="meta-value">Producto digital interno B2C</p>
+      </div>
+    </div>
+
+    <div class="case-hero-visual" style="height:auto; padding:0; background:none; border:none;">
+      <img src="assets/enaepass/Imagen inicio mockup.jpg" alt="Portal del Alumno — Mockup" style="width:100%; border-radius:4px; border:1px solid var(--border-hover); display:block;">
+    </div>
+  </div>
+</section>
+
+
+<!-- CONTENT -->
+<div class="case-content">
+
+  <!-- 1. EL PROBLEMA -->
+  <section class="cs-section">
+    <p class="section-label">01 — El problema</p>
+    <h2 class="section-title">El email <em>era</em> el portal</h2>
+
+    <p class="body-text">Cuando empecé a investigar para este proyecto, la pregunta era sencilla: ¿cómo mejoramos el portal del alumno de ENAE Business School?</p>
+
+    <p class="body-text">La respuesta que encontré fue más incómoda: <strong>el portal no era el problema. El email era el portal.</strong></p>
+
+    <p class="body-text">Los alumnos enviaban correos para pedir certificados. Para saber el estado de su matrícula. Para preguntar sus notas. Para entender qué tenían que hacer el primer día de clase. El equipo de administración contestaba esos correos. Y así, día tras día, la experiencia del alumno dependía de la velocidad de respuesta de una bandeja de entrada.</p>
+
+    <div class="pull-quote">
+      <p>"Los alumnos —especialmente los internacionales— sentían desorientación al inicio del curso, incapacidad para resolver trámites de forma autónoma, y una sensación de aislamiento agravada por la falta de canales de comunicación ágiles."</p>
+    </div>
+
+    <p class="body-text">ENAE Business School atiende a un perfil de alumno internacional, diverso y frecuentemente con cargas laborales y familiares simultáneas. El portal existente generaba fricciones que repercutían tanto en la experiencia del alumno como en la carga operativa del equipo administrativo.</p>
+
+    <p class="body-text"><strong>La oportunidad era doble:</strong> mejorar la retención y satisfacción del alumno, y liberar recursos internos mediante la digitalización de procesos repetitivos.</p>
+  </section>
+
+
+  <!-- 2. OBJETIVOS -->
+  <section class="cs-section">
+    <p class="section-label">02 — Objetivos</p>
+    <h2 class="section-title">Qué debía <em>resolver</em></h2>
+
+    <div class="kpi-grid">
+      <div class="kpi-card">
+        <div class="kpi-metric">+60%</div>
+        <div class="kpi-label">Tasa de autogestión</div>
+        <div class="kpi-desc">Trámites resueltos sin contacto con administración en 6 meses</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-metric">−40%</div>
+        <div class="kpi-label">Reducción de emails</div>
+        <div class="kpi-desc">Volumen de correos administrativos en el primer trimestre</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-metric">&lt;90s</div>
+        <div class="kpi-label">Time-on-task</div>
+        <div class="kpi-desc">Tiempo promedio para completar una tarea clave</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-metric">&gt;85%</div>
+        <div class="kpi-label">Task completion rate</div>
+        <div class="kpi-desc">Tasa de éxito en pruebas de usabilidad</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-metric">&gt;75</div>
+        <div class="kpi-label">SUS Score</div>
+        <div class="kpi-desc">System Usability Scale post-testing</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-metric">&gt;70%</div>
+        <div class="kpi-label">Onboarding completado</div>
+        <div class="kpi-desc">Alumnos nuevos que completan el flujo de bienvenida</div>
+      </div>
+    </div>
+
+    <p class="body-text" style="font-size:12px; color: var(--text-muted); font-style: italic;">Nota: Al tratarse de un proyecto académico, los KPIs son propuestos como métricas de éxito recomendadas para una futura implementación, no resultados post-lanzamiento.</p>
+  </section>
+
+
+  <!-- 3. BENCHMARK -->
+  <section class="cs-section">
+    <p class="section-label">03 — Benchmark</p>
+    <h2 class="section-title">Primero, ver qué hace <em>el sector</em></h2>
+
+    <p class="body-text">Antes de hablar con usuarios, analicé un total de <strong>10 escuelas de negocio</strong> y su presencia digital — páginas web, portales del alumno y plataformas de empleo — para identificar buenas prácticas, patrones comunes y oportunidades que el sector todavía no estaba resolviendo.</p>
+
+    <div style="display:grid; grid-template-columns:repeat(2,1fr); gap:16px; margin:2rem 0;">
+      <div style="background:var(--surface); border:1px solid var(--border); border-radius:4px; padding:1.5rem;">
+        <p style="font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:var(--accent); margin-bottom:0.75rem;">Lo que funciona en el sector</p>
+        <div style="display:flex; flex-direction:column; gap:0.6rem;">
+          <p style="font-size:13px; color:var(--text-secondary); display:flex; gap:0.75rem;"><span style="color:var(--accent); flex-shrink:0;">—</span>Hero section impactante con CTA claros desde el primer scroll (ESADE, ESIE, IESE)</p>
+          <p style="font-size:13px; color:var(--text-secondary); display:flex; gap:0.75rem;"><span style="color:var(--accent); flex-shrink:0;">—</span>Buscador visible para acceder rápido a la oferta formativa (IEBS, EAE)</p>
+          <p style="font-size:13px; color:var(--text-secondary); display:flex; gap:0.75rem;"><span style="color:var(--accent); flex-shrink:0;">—</span>Datos y rankings como elemento de confianza inmediata (IESE, OBS, EAE)</p>
+          <p style="font-size:13px; color:var(--text-secondary); display:flex; gap:0.75rem;"><span style="color:var(--accent); flex-shrink:0;">—</span>Portal del alumno con bloques por iconos y colores — reduce la curva de aprendizaje (UMU)</p>
+          <p style="font-size:13px; color:var(--text-secondary); display:flex; gap:0.75rem;"><span style="color:var(--accent); flex-shrink:0;">—</span>Diseño completamente responsive y adaptado a móvil (CEF, ESADE)</p>
+        </div>
+      </div>
+      <div style="background:var(--surface); border:1px solid var(--border); border-radius:4px; padding:1.5rem;">
+        <p style="font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:var(--text-muted); margin-bottom:0.75rem;">Lo que falta en el sector</p>
+        <div style="display:flex; flex-direction:column; gap:0.6rem;">
+          <p style="font-size:13px; color:var(--text-secondary); display:flex; gap:0.75rem;"><span style="color:var(--text-muted); flex-shrink:0;">—</span>Ningún portal integra gestión académica y administrativa en un único entorno</p>
+          <p style="font-size:13px; color:var(--text-secondary); display:flex; gap:0.75rem;"><span style="color:var(--text-muted); flex-shrink:0;">—</span>El autoservicio brilla por su ausencia — todo lleva a un formulario de contacto</p>
+          <p style="font-size:13px; color:var(--text-secondary); display:flex; gap:0.75rem;"><span style="color:var(--text-muted); flex-shrink:0;">—</span>La empleabilidad aparece enterrada en submenús, sin protagonismo</p>
+          <p style="font-size:13px; color:var(--text-secondary); display:flex; gap:0.75rem;"><span style="color:var(--text-muted); flex-shrink:0;">—</span>No hay onboarding para alumnos nuevos ni guías de integración</p>
+          <p style="font-size:13px; color:var(--text-secondary); display:flex; gap:0.75rem;"><span style="color:var(--text-muted); flex-shrink:0;">—</span>Visibilidad del estado de trámites: inexistente en todos los casos analizados</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+    <h3 style="font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:600;letter-spacing:-0.02em;margin-bottom:1.5rem;">Análisis por escuela</h3>
+    <p class="body-text">Cada escuela fue analizada de forma individual evaluando su web, portal del alumno y plataforma de empleo. Estas son las páginas del estudio de benchmarking:</p>
+
+    <img src="assets/enaepass/benchmark-esade.jpg" alt="Benchmark ESADE" class="case-img">
+    <p class="case-img-caption">ESADE — Hero section impactante, navegación secundaria clara y diseño responsive</p>
+
+    <img src="assets/enaepass/benchmark-cef.jpg" alt="Benchmark CEF" class="case-img">
+    <p class="case-img-caption">CEF — Identidad visual corporativa coherente, menú estructurado debajo del hero</p>
+
+    <img src="assets/enaepass/benchmark-iebs.jpg" alt="Benchmark IEBS" class="case-img">
+    <p class="case-img-caption">IEBS — Buscador visible bajo el header para acceso rápido a la oferta formativa</p>
+
+    <img src="assets/enaepass/benchmark-esie.jpg" alt="Benchmark ESIE" class="case-img">
+    <p class="case-img-caption">ESIE — Hero section con CTAs muy bien definidos e inmediatos, refuerzo de prestigio</p>
+
+    <img src="assets/enaepass/benchmark-iese.jpg" alt="Benchmark IESE" class="case-img">
+    <p class="case-img-caption">IESE — Datos de impacto global desde el primer scroll (60.000 alumnos, rankings FT)</p>
+
+    <img src="assets/enaepass/benchmark-obs.jpg" alt="Benchmark OBS" class="case-img">
+    <p class="case-img-caption">OBS — CTAs vistosos y bien posicionados para guiar al usuario hacia la solicitud de info</p>
+
+    <img src="assets/enaepass/benchmark-eae.jpg" alt="Benchmark EAE" class="case-img">
+    <p class="case-img-caption">EAE — Declaración de marca como apertura + buscador integrado y visible</p>
+
+    <img src="assets/enaepass/benchmark-eada.jpg" alt="Benchmark EADA" class="case-img">
+    <p class="case-img-caption">EADA — Colores corporativos llamativos, menú claro con toda la oferta de másteres</p>
+
+    <img src="assets/enaepass/benchmark-eneb.jpg" alt="Benchmark ENEB" class="case-img">
+    <p class="case-img-caption">ENEB — Hero potente con propósito de marca + logos de empresas colaboradoras</p>
+
+    <img src="assets/enaepass/benchmark-umu-portal.jpg" alt="Benchmark UMU Portal del Alumno" class="case-img">
+    <p class="case-img-caption">UMU — Portal del alumno con bloques por iconos y colores, diseño accesible y sin complejidad</p>
+
+    <img src="assets/enaepass/benchmark-tabla.jpg" alt="Tabla de benchmark competitivo" class="case-img">
+    <p class="case-img-caption">Resumen comparativo — evaluación de las secciones clave: web, branding, portal del alumno y empleo</p>
+
+    <div class="pull-quote">
+      <p>Ningún portal académico analizado resuelve de forma eficiente el salto entre lo académico y lo administrativo dentro de un mismo entorno. Esa brecha es la principal oportunidad de diferenciación del Portal del Alumno.</p>
+    </div>
+  </section>
+
+
+  <!-- 4. ENCUESTAS -->
+  <section class="cs-section">
+    <p class="section-label">04 — Encuestas</p>
+    <h2 class="section-title">54 respuestas que <em>cuantificaron</em> la fricción</h2>
+
+    <p class="body-text">La encuesta se lanzó exclusivamente a alumnos con el objetivo de entender sus motivaciones al elegir un máster y las frustraciones que encuentran en los procesos administrativos y digitales de la escuela.</p>
+
+    <div class="kpi-grid" style="grid-template-columns:repeat(4,1fr);">
+      <div class="kpi-card">
+        <div class="kpi-metric">54</div>
+        <div class="kpi-label">Respondentes</div>
+        <div class="kpi-desc">Exclusivamente alumnos actuales y recientes</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-metric">25–34</div>
+        <div class="kpi-label">Rango de edad</div>
+        <div class="kpi-desc">Franja más representada en la muestra</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-metric">PC/Mac</div>
+        <div class="kpi-label">Dispositivo principal</div>
+        <div class="kpi-desc">Aunque el móvil emerge como secundario clave</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-metric">Vídeo</div>
+        <div class="kpi-label">Formato preferido</div>
+        <div class="kpi-desc">Videos cortos por encima de artículos y podcast</div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+    <h3 style="font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:600;letter-spacing:-0.02em;margin-bottom:1.5rem;">¿Qué valoran al elegir un máster?</h3>
+
+    <p class="body-text">El plan de estudios y la metodología son los factores más valorados — muy por encima del precio o el ranking. Esto tiene implicaciones directas en cómo debe presentarse el contenido del portal: el alumno ya ha tomado la decisión de estudiar; ahora necesita que el portal le ayude a gestionar, no a convencerle.</p>
+
+    <img src="assets/enaepass/encuestas-master.jpg" alt="Encuestas — valoración del máster" class="case-img">
+    <p class="case-img-caption">Valoración de aspectos al elegir un máster — resultados de la encuesta (n=54)</p>
+
+    <div class="divider"></div>
+    <h3 style="font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:600;letter-spacing:-0.02em;margin-bottom:1.5rem;">Frustraciones en procesos administrativos</h3>
+
+    <p class="body-text">Las áreas con mayor insatisfacción son las que requieren interacción con administración: atención académica, solicitud de documentos y comunicación con profesores. El acceso al calendario y la visualización de calificaciones también muestran niveles bajos de satisfacción — señales claras de los puntos donde el portal tiene que mejorar.</p>
+
+    <img src="assets/enaepass/encuestas-frustraciones.jpg" alt="Encuestas — frustraciones administrativas" class="case-img">
+    <p class="case-img-caption">Niveles de satisfacción en procesos administrativos — de "nada satisfecho" a "muy satisfecho"</p>
+
+    <div class="pull-quote">
+      <p>La encuesta confirma que las fricciones no están en el contenido académico, sino en la capa administrativa: pedir un documento, saber cuándo llega, comunicarse con quien corresponde. Exactamente lo que el portal no resuelve hoy.</p>
+    </div>
+  </section>
+
+
+  <!-- 5. ENTREVISTAS -->
+  <section class="cs-section">
+    <p class="section-label">05 — Entrevistas</p>
+    <h2 class="section-title">10 conversaciones que cambiaron <em>el brief</em></h2>
+
+    <p class="body-text">Se entrevistó a <strong>10 personas</strong>: 8 alumnos que habían finalizado su máster y 2 miembros del equipo administrativo de la escuela. Incluir la visión del personal fue una decisión clave — el problema del email afecta a ambos lados.</p>
+
+    <img src="assets/enaepass/entrevistas-perfiles.jpg" alt="Perfiles entrevistados" class="case-img">
+    <p class="case-img-caption">Perfiles entrevistados — 8 alumnos y 2 personas del equipo administrativo</p>
+
+    <div class="divider"></div>
+    <h3 style="font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:600;letter-spacing:-0.02em;margin-bottom:1.5rem;">Qué dijeron los alumnos</h3>
+
+    <img src="assets/enaepass/entrevistas-insights-alumnos.jpg" alt="Insights de entrevistas a alumnos" class="case-img">
+    <p class="case-img-caption">Insights principales de las entrevistas a alumnos — motivaciones y frustraciones</p>
+
+    <div class="finding-list">
+      <div class="finding-item">
+        <span class="finding-badge">💼</span>
+        <div>
+          <p class="finding-title">Lo aprendido es directamente aplicable — eso genera confianza</p>
+          <p class="finding-detail">Muchos alumnos destacan que el contenido del máster tiene impacto inmediato en su trabajo. La reputación de la institución y sus vínculos con empresas refuerzan la motivación. El portal debe reflejar ese valor, no enterrarlo en formularios.</p>
+        </div>
+      </div>
+      <div class="finding-item">
+        <span class="finding-badge">😰</span>
+        <div>
+          <p class="finding-title">El miedo a no integrarse — especialmente en perfiles internacionales</p>
+          <p class="finding-detail">Los alumnos internacionales expresaron miedo real a sentirse solos, no entender los procesos y no encontrar un entorno de apoyo. Este hallazgo transformó el brief: el portal no es solo un gestor de tareas, es un sistema anti-ansiedad para el primer mes.</p>
+        </div>
+      </div>
+      <div class="finding-item">
+        <span class="finding-badge">⏱</span>
+        <div>
+          <p class="finding-title">El tiempo es el recurso más escaso</p>
+          <p class="finding-detail">Perfiles que combinan trabajo y familia señalaron que perder tiempo en gestiones que "deberían ser automáticas" es una de sus principales frustraciones. Cada clic innecesario tiene un coste real en la vida de estas personas.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+    <h3 style="font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:600;letter-spacing:-0.02em;margin-bottom:1.5rem;">Qué dijeron desde administración</h3>
+
+    <img src="assets/enaepass/entrevistas-insights-admin.jpg" alt="Insights de entrevistas a administración" class="case-img">
+    <p class="case-img-caption">Insights del equipo administrativo — motivaciones y frustraciones desde el otro lado</p>
+
+    <div class="finding-list">
+      <div class="finding-item">
+        <span class="finding-badge">📧</span>
+        <div>
+          <p class="finding-title">La carga de email es agotadora — y evitable</p>
+          <p class="finding-detail">La gestión manual a través de correos consume tiempo, es lenta y genera agotamiento. El equipo administrativo tiene un fuerte compromiso con los estudiantes, pero las herramientas no les permiten hacer su trabajo con eficiencia. El portal tiene que liberar ese tiempo.</p>
+        </div>
+      </div>
+      <div class="finding-item">
+        <span class="finding-badge">🔧</span>
+        <div>
+          <p class="finding-title">Falta de herramientas tecnológicas actualizadas</p>
+          <p class="finding-detail">El equipo señala la falta de sistemas integrados como una barrera para ofrecer un servicio ágil. No es falta de voluntad: es falta de infraestructura. El portal puede resolver esto por ambas partes al mismo tiempo.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="pull-quote">
+      <p>El mismo problema — la dependencia del email — frustra a los alumnos porque los hace esperar, y frustra al equipo administrativo porque los obliga a repetir. Una buena solución resuelve los dos lados a la vez.</p>
+    </div>
+  </section>
+
+
+  <!-- 6. USER PERSONAS -->
+  <section class="cs-section">
+    <p class="section-label">06 — User Personas</p>
+    <h2 class="section-title">¿Para quién <em>diseñamos</em>?</h2>
+
+    <p class="body-text">Las entrevistas y encuestas dieron lugar a tres user personas que representan los patrones más relevantes de uso. No son perfiles demográficos: son retratos de motivaciones, miedos y necesidades reales identificadas en la investigación.</p>
+
+    <div class="case-img-grid" style="margin-top:2rem;">
+      <img src="assets/enaepass/enae-persona-nerea.jpg" alt="Persona — Nerea">
+      <img src="assets/enaepass/enae-persona-paula.jpg" alt="Persona — Paula">
+      <img src="assets/enaepass/enae-persona-lucas.jpg" alt="Persona — Lucas">
+    </div>
+    <p class="case-img-caption">User Personas — Nerea, Paula y Lucas (basadas en entrevistas reales)</p>
+
+    <div style="display:flex; flex-direction:column; gap:16px; margin-top:2rem;">
+      <div style="background:var(--surface); border:1px solid var(--border); border-radius:4px; padding:1.75rem; display:grid; grid-template-columns:160px 1fr; gap:2rem; align-items:start;">
+        <div>
+          <p style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);margin-bottom:0.4rem;">Persona 01</p>
+          <p style="font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:700;margin-bottom:0.2rem;">Nerea</p>
+          <p style="font-size:12px;color:var(--text-muted);">29 años · No trabaja</p>
+        </div>
+        <div>
+          <p style="font-size:13px;color:var(--text-secondary);line-height:1.7;margin-bottom:1rem;">Profesional con experiencia en el sector agrícola, llegó a España buscando especialización. Sociable pero con miedo inicial a no adaptarse al entorno europeo.</p>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+            <div>
+              <p style="font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);margin-bottom:0.4rem;">Necesita</p>
+              <p style="font-size:13px;color:var(--text-secondary);line-height:1.6;">Acompañamiento inicial · Acceso claro a recursos · Información práctica sobre la ciudad</p>
+            </div>
+            <div>
+              <p style="font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);margin-bottom:0.4rem;">Le frena</p>
+              <p style="font-size:13px;color:var(--text-secondary);line-height:1.6;">Miedo a sentirse sola · Barreras culturales · Procesos administrativos opacos</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style="background:var(--surface); border:1px solid var(--border); border-radius:4px; padding:1.75rem; display:grid; grid-template-columns:160px 1fr; gap:2rem; align-items:start;">
+        <div>
+          <p style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);margin-bottom:0.4rem;">Persona 02</p>
+          <p style="font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:700;margin-bottom:0.2rem;">Paula</p>
+          <p style="font-size:12px;color:var(--text-muted);">34 años · Trabaja a jornada completa</p>
+        </div>
+        <div>
+          <p style="font-size:13px;color:var(--text-secondary);line-height:1.7;margin-bottom:1rem;">Trabaja en una empresa familiar y tiene familia. Busca avanzar en su carrera sin dejar sus responsabilidades personales. El tiempo es su recurso más escaso.</p>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+            <div>
+              <p style="font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);margin-bottom:0.4rem;">Necesita</p>
+              <p style="font-size:13px;color:var(--text-secondary);line-height:1.6;">Flexibilidad horaria · Plataforma intuitiva · Soporte en planificación del tiempo</p>
+            </div>
+            <div>
+              <p style="font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);margin-bottom:0.4rem;">Le frena</p>
+              <p style="font-size:13px;color:var(--text-secondary);line-height:1.6;">Sensación de no tener tiempo · Falta de coordinación · Contenido no aplicable a su realidad</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style="background:var(--surface); border:1px solid var(--border); border-radius:4px; padding:1.75rem; display:grid; grid-template-columns:160px 1fr; gap:2rem; align-items:start;">
+        <div>
+          <p style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);margin-bottom:0.4rem;">Persona 03</p>
+          <p style="font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:700;margin-bottom:0.2rem;">Lucas</p>
+          <p style="font-size:12px;color:var(--text-muted);">25 años · No trabaja</p>
+        </div>
+        <div>
+          <p style="font-size:13px;color:var(--text-secondary);line-height:1.7;margin-bottom:1rem;">Viene de una carrera técnica y quiere diferenciarse con un máster en Europa. Motivado, pero con miedo a no estar al nivel en programación o estadística.</p>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+            <div>
+              <p style="font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);margin-bottom:0.4rem;">Necesita</p>
+              <p style="font-size:13px;color:var(--text-secondary);line-height:1.6;">Contenidos guiados · Profesores accesibles · Espacios para reforzar temas técnicos</p>
+            </div>
+            <div>
+              <p style="font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);margin-bottom:0.4rem;">Le frena</p>
+              <p style="font-size:13px;color:var(--text-secondary);line-height:1.6;">Miedo a "hacer el ridículo" · Dudas técnicas sin resolver · Sensación de soledad</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- 7. CUSTOMER JOURNEY -->
+  <section class="cs-section">
+    <p class="section-label">07 — Customer Journey</p>
+    <h2 class="section-title">El recorrido completo del <em>candidato</em></h2>
+
+    <p class="body-text">El Customer Journey Map recoge las 5 fases que atraviesa el candidato desde que decide que quiere hacer un máster hasta que toma la decisión de inscribirse. Cada fase tiene sus propias fricciones, emociones y oportunidades de diseño.</p>
+
+    <img src="assets/enaepass/enae-customer-journey.jpg" alt="Customer Journey Map" class="case-img">
+    <p class="case-img-caption">Customer Journey Map — emociones y puntos de fricción en cada fase del proceso</p>
+
+    <table class="cs-table">
+      <thead>
+        <tr>
+          <th>Fase</th>
+          <th>Qué hace el candidato</th>
+          <th>Emoción dominante</th>
+          <th>Oportunidad</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Descubrimiento</td>
+          <td>Busca másteres, analiza si la web es profesional y confiable</td>
+          <td>Ilusión + incertidumbre</td>
+          <td>SEO, Hero section con CTA claros, branding diferenciador</td>
+        </tr>
+        <tr>
+          <td>Exploración</td>
+          <td>Navega por el máster, lee el temario, evalúa si es lo que busca</td>
+          <td>Curiosidad + duda</td>
+          <td>Página del máster jerarquizada, contenido visual, buenos CTA</td>
+        </tr>
+        <tr>
+          <td>Comparación</td>
+          <td>Busca escuelas similares, descarga folleto, busca opiniones en RRSS</td>
+          <td>Análisis + desconfianza</td>
+          <td>Datos de empleabilidad, testimonios reales, ranking visible</td>
+        </tr>
+        <tr>
+          <td>Contacto</td>
+          <td>Se pone en contacto, intercambia mails, agenda una llamada</td>
+          <td>Expectativa + impaciencia</td>
+          <td>Chat IA, WhatsApp, formulario simple, respuesta en &lt;10 min</td>
+        </tr>
+        <tr>
+          <td>Decisión</td>
+          <td>Vuelve a ver el temario, piensa en los beneficios, hace el papeleo</td>
+          <td>Resolución + algo de miedo</td>
+          <td>Mensaje "te acompañamos desde hoy", reserva sin pago inicial</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="pull-quote">
+      <p>El mayor abandono ocurre entre la fase de contacto y la decisión. El candidato necesita que alguien o algo le acompañe en ese último tramo — no un formulario más.</p>
+    </div>
+  </section>
+
+
+  <!-- 8. INSIGHTS Y AFINIDAD -->
+  <section class="cs-section">
+    <p class="section-label">08 — Insights y Afinidad</p>
+    <h2 class="section-title">Sintetizar para <em>encontrar el patrón</em></h2>
+
+    <p class="body-text">Una vez recogidos los datos de encuestas, entrevistas y benchmark, los agrupé por fases del journey para identificar qué problemas aparecen en cada momento y qué soluciones puede aportar el portal.</p>
+
+    <img src="assets/enaepass/insights-afinidad-recopilacion.jpg" alt="Recopilación de insights por fase" class="case-img">
+    <p class="case-img-caption">Mapa de afinidad — insights organizados por fase del Customer Journey</p>
+
+    <img src="assets/enaepass/07-insights-afinidad.jpg" alt="Mapa de afinidad visual" class="case-img">
+    <p class="case-img-caption">Síntesis visual de hallazgos — agrupación por categorías de necesidad</p>
+
+    <div class="divider"></div>
+    <h3 style="font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:600;letter-spacing:-0.02em;margin-bottom:1.5rem;">Las preguntas que los insights respondieron</h3>
+
+    <div style="display:flex; flex-direction:column; gap:16px; margin:1.5rem 0;">
+      <div style="background:var(--surface); border:1px solid var(--border); border-radius:4px; padding:1.5rem;">
+        <p style="font-size:14px;font-weight:500;color:var(--text-primary);margin-bottom:0.5rem;">¿Cómo capta la atención de quien aún no ha decidido estudiar?</p>
+        <p style="font-size:13px;color:var(--text-secondary);line-height:1.7;">Mediante contenido educativo bien posicionado en Google — blogs, vídeos que respondan dudas como "qué máster elegir" o "cuáles tienen más salidas laborales".</p>
+      </div>
+      <div style="background:var(--surface); border:1px solid var(--border); border-radius:4px; padding:1.5rem;">
+        <p style="font-size:14px;font-weight:500;color:var(--text-primary);margin-bottom:0.5rem;">¿Qué canales de contacto son imprescindibles hoy?</p>
+        <p style="font-size:13px;color:var(--text-secondary);line-height:1.7;">Chat IA, WhatsApp, formulario de contacto y opción de agendar llamada. El usuario quiere resolver dudas rápido — no esperar 48 horas una respuesta por email.</p>
+      </div>
+      <div style="background:var(--surface); border:1px solid var(--border); border-radius:4px; padding:1.5rem;">
+        <p style="font-size:14px;font-weight:500;color:var(--text-primary);margin-bottom:0.5rem;">¿Cómo ayuda la web a que el usuario elija esta escuela frente a la competencia?</p>
+        <p style="font-size:13px;color:var(--text-secondary);line-height:1.7;">Comparativas claras, visibilidad de becas y financiación, empleabilidad demostrada con datos concretos, testimonios reales y acreditaciones visibles.</p>
+      </div>
+    </div>
+
+    <div class="insight-grid">
+      <div class="insight-card">
+        <div class="insight-num">01</div>
+        <div class="insight-text">
+          <strong>Organización por objetivos, no por departamentos</strong>
+          Los alumnos agrupan el portal según sus tareas reales, no según la estructura interna de la universidad.
+        </div>
+      </div>
+      <div class="insight-card">
+        <div class="insight-num">02</div>
+        <div class="insight-text">
+          <strong>El autoservicio es una necesidad, no un deseo</strong>
+          Cada flujo administrativo debe ser completable sin contactar a nadie.
+        </div>
+      </div>
+      <div class="insight-card">
+        <div class="insight-num">03</div>
+        <div class="insight-text">
+          <strong>La ansiedad del primer día es transversal</strong>
+          El onboarding debe ser un módulo central, no un texto de bienvenida.
+        </div>
+      </div>
+      <div class="insight-card">
+        <div class="insight-num">04</div>
+        <div class="insight-text">
+          <strong>La visibilidad del estado genera confianza</strong>
+          El alumno necesita saber qué ocurre con cada solicitud en tiempo real.
+        </div>
+      </div>
+      <div class="insight-card">
+        <div class="insight-num">05</div>
+        <div class="insight-text">
+          <strong>Las notificaciones son una capa transversal</strong>
+          No deben ser una sección: deben estar presentes en todo el sistema.
+        </div>
+      </div>
+      <div class="insight-card">
+        <div class="insight-num">06</div>
+        <div class="insight-text">
+          <strong>La empleabilidad tiene valor estratégico percibido</strong>
+          Merece sección propia, no estar enterrada en submenús.
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- 9. BRAINSTORMING -->
+  <section class="cs-section">
+    <p class="section-label">09 — Brainstorming retos e ideas</p>
+    <h2 class="section-title">Un reto por fase, <em>varias ideas</em> por reto</h2>
+
+    <p class="body-text">Con los insights organizados por fase del journey, hice un ejercicio de brainstorming estructurado: para cada reto identificado en cada fase, generé ideas concretas de solución — sin filtrar todavía por viabilidad.</p>
+
+    <img src="assets/enaepass/brainstorming-ideas.jpg" alt="Brainstorming retos e ideas" class="case-img">
+    <p class="case-img-caption">Brainstorming organizado por fases del Customer Journey — retos vs. ideas de solución</p>
+
+    <div style="display:flex; flex-direction:column; gap:16px; margin:2rem 0;">
+      <div style="background:var(--surface); border:1px solid var(--border); border-radius:4px; overflow:hidden;">
+        <div style="background:rgba(226,255,0,0.06); border-bottom:1px solid var(--border); padding:0.75rem 1.5rem; display:flex; justify-content:space-between; align-items:center;">
+          <span style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);">Descubrimiento</span>
+          <span style="font-size:11px;color:var(--text-muted);">Reto: poca visibilidad y marca poco diferenciada</span>
+        </div>
+        <div style="padding:1.25rem 1.5rem;">
+          <p style="font-size:13px;color:var(--text-secondary);line-height:1.8;">Blog con titulares optimizados ("Guía de másteres 2025") · Vídeos cortos en TikTok/YouTube · Campañas PPC segmentadas por perfil · Podcast institucional</p>
+        </div>
+      </div>
+      <div style="background:var(--surface); border:1px solid var(--border); border-radius:4px; overflow:hidden;">
+        <div style="background:rgba(226,255,0,0.06); border-bottom:1px solid var(--border); padding:0.75rem 1.5rem; display:flex; justify-content:space-between; align-items:center;">
+          <span style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);">Exploración</span>
+          <span style="font-size:11px;color:var(--text-muted);">Reto: sitio web genérico, dudas no resueltas</span>
+        </div>
+        <div style="padding:1.25rem 1.5rem;">
+          <p style="font-size:13px;color:var(--text-secondary);line-height:1.8;">Infografías con storytelling de alumnos reales · Mapas interactivos de la estructura del curso · Vídeos cortos de profesores explicando sus módulos</p>
+        </div>
+      </div>
+      <div style="background:var(--surface); border:1px solid var(--border); border-radius:4px; overflow:hidden;">
+        <div style="background:rgba(226,255,0,0.06); border-bottom:1px solid var(--border); padding:0.75rem 1.5rem; display:flex; justify-content:space-between; align-items:center;">
+          <span style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);">Contacto directo</span>
+          <span style="font-size:11px;color:var(--text-muted);">Reto: formulario largo, asesoría lenta y poco personalizada</span>
+        </div>
+        <div style="padding:1.25rem 1.5rem;">
+          <p style="font-size:13px;color:var(--text-secondary);line-height:1.8;">Chatbot que clasifica dudas y agenda llamadas · WhatsApp con asesores reales (&lt;10 min de respuesta) · Formulario inteligente que empieza con 2 campos · Botón fijo "Habla con un orientador ahora"</p>
+        </div>
+      </div>
+      <div style="background:var(--surface); border:1px solid var(--border); border-radius:4px; overflow:hidden;">
+        <div style="background:rgba(226,255,0,0.06); border-bottom:1px solid var(--border); padding:0.75rem 1.5rem; display:flex; justify-content:space-between; align-items:center;">
+          <span style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);">Decisión</span>
+          <span style="font-size:11px;color:var(--text-muted);">Reto: abandono antes de inscribirse, miedo a pagar sin garantías</span>
+        </div>
+        <div style="padding:1.25rem 1.5rem;">
+          <p style="font-size:13px;color:var(--text-secondary);line-height:1.8;">Página de decisión con mensaje "Te acompañamos desde hoy" · Reserva de plaza sin pago inicial · Contador real de plazas disponibles · Vídeo del director dando la bienvenida</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- 10. MATRIZ -->
+  <section class="cs-section">
+    <p class="section-label">10 — Matriz Atractivo-Esfuerzo</p>
+    <h2 class="section-title">Priorizar: qué tiene más impacto con <em>menos esfuerzo</em></h2>
+
+    <p class="body-text">Con todas las ideas del brainstorming sobre la mesa, las situé en una matriz de atractivo vs. esfuerzo para identificar qué implementar primero. El objetivo era separar las "quick wins" de las apuestas a largo plazo.</p>
+
+    <img src="assets/enaepass/matriz-atractivo-esfuerzo.jpg" alt="Matriz Atractivo-Esfuerzo" class="case-img">
+    <p class="case-img-caption">Matriz Atractivo-Esfuerzo — priorización de ideas generadas en el brainstorming</p>
+
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:2rem 0;">
+      <div style="background:var(--surface); border:1px solid var(--border); border-radius:4px; padding:1.5rem;">
+        <p style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);margin-bottom:0.75rem;">Alto atractivo · Bajo esfuerzo</p>
+        <p style="font-size:12px;color:var(--text-muted);margin-bottom:0.75rem;">Empezar aquí</p>
+        <div style="display:flex;flex-direction:column;gap:0.5rem;">
+          <p style="font-size:13px;color:var(--text-secondary);">— Contador de plazas disponibles</p>
+          <p style="font-size:13px;color:var(--text-secondary);">— Testimonios reales de alumnos</p>
+          <p style="font-size:13px;color:var(--text-secondary);">— Test de autoevaluación de perfil</p>
+        </div>
+      </div>
+      <div style="background:var(--surface); border:1px solid var(--border); border-radius:4px; padding:1.5rem;">
+        <p style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-secondary);margin-bottom:0.75rem;">Alto atractivo · Alto esfuerzo</p>
+        <p style="font-size:12px;color:var(--text-muted);margin-bottom:0.75rem;">Planificar a medio plazo</p>
+        <div style="display:flex;flex-direction:column;gap:0.5rem;">
+          <p style="font-size:13px;color:var(--text-secondary);">— Chatbot inteligente</p>
+          <p style="font-size:13px;color:var(--text-secondary);">— Blog con SEO posicionado</p>
+          <p style="font-size:13px;color:var(--text-secondary);">— Simulador de becas</p>
+          <p style="font-size:13px;color:var(--text-secondary);">— Acuerdos con empresas</p>
+        </div>
+      </div>
+      <div style="background:var(--surface); border:1px solid var(--border); border-radius:4px; padding:1.5rem;">
+        <p style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);margin-bottom:0.75rem;">Bajo atractivo · Bajo esfuerzo</p>
+        <p style="font-size:12px;color:var(--text-muted);margin-bottom:0.75rem;">Ejecutar si hay tiempo</p>
+        <div style="display:flex;flex-direction:column;gap:0.5rem;">
+          <p style="font-size:13px;color:var(--text-secondary);">— Infografías de programa</p>
+          <p style="font-size:13px;color:var(--text-secondary);">— Comparador de másteres</p>
+        </div>
+      </div>
+      <div style="background:var(--surface); border:1px solid var(--border); border-radius:4px; padding:1.5rem;">
+        <p style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);margin-bottom:0.75rem;">Bajo atractivo · Alto esfuerzo</p>
+        <p style="font-size:12px;color:var(--text-muted);margin-bottom:0.75rem;">Descartar o aplazar</p>
+        <div style="display:flex;flex-direction:column;gap:0.5rem;">
+          <p style="font-size:13px;color:var(--text-secondary);">— Canal de YouTube propio</p>
+          <p style="font-size:13px;color:var(--text-secondary);">— Podcast institucional</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- 11. PROPUESTA DE VALOR -->
+  <section class="cs-section">
+    <p class="section-label">11 — Propuesta de Valor</p>
+    <h2 class="section-title">Qué ofrece el portal que <em>nadie más ofrece</em></h2>
+
+    <p class="body-text">Con toda la investigación sintetizada, definí la propuesta de valor del portal usando el Value Proposition Canvas: qué trabajos hace el alumno, qué alegrías busca y qué frustraciones tiene — y cómo el portal actúa como creador de alegrías y mitigador de fricciones.</p>
+
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:2rem 0;">
+      <img src="assets/enaepass/propuesta-valor-segmento.jpg" alt="Segmento de cliente" style="width:100%;border-radius:4px;border:1px solid var(--border-hover);display:block;">
+      <img src="assets/enaepass/propuesta-valor-canvas.jpg" alt="Propuesta de valor canvas" style="width:100%;border-radius:4px;border:1px solid var(--border-hover);display:block;">
+    </div>
+    <p class="case-img-caption">Value Proposition Canvas — segmento de cliente (izq.) y propuesta de valor (der.)</p>
+
+    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin:2rem 0;">
+      <div style="background:var(--surface); border:1px solid var(--border); border-radius:4px; padding:1.5rem;">
+        <p style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);margin-bottom:0.75rem;">Trabajos del alumno</p>
+        <div style="display:flex;flex-direction:column;gap:0.5rem;">
+          <p style="font-size:13px;color:var(--text-secondary);">— Comparar escuelas y másteres</p>
+          <p style="font-size:13px;color:var(--text-secondary);">— Encontrar el que mejor se adapte</p>
+          <p style="font-size:13px;color:var(--text-secondary);">— Gestionar su vida académica sin fricción</p>
+          <p style="font-size:13px;color:var(--text-secondary);">— Obtener respuestas rápidas</p>
+        </div>
+      </div>
+      <div style="background:var(--surface); border:1px solid var(--border); border-radius:4px; padding:1.5rem;">
+        <p style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);margin-bottom:0.75rem;">Alegrías que busca</p>
+        <div style="display:flex;flex-direction:column;gap:0.5rem;">
+          <p style="font-size:13px;color:var(--text-secondary);">— Encontrar trabajo al terminar</p>
+          <p style="font-size:13px;color:var(--text-secondary);">— Sentirse seguro y acompañado</p>
+          <p style="font-size:13px;color:var(--text-secondary);">— Aprender y crecer profesionalmente</p>
+          <p style="font-size:13px;color:var(--text-secondary);">— Tener el control de su progreso</p>
+        </div>
+      </div>
+      <div style="background:var(--surface); border:1px solid var(--border); border-radius:4px; padding:1.5rem;">
+        <p style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);margin-bottom:0.75rem;">Frustraciones que sufre</p>
+        <div style="display:flex;flex-direction:column;gap:0.5rem;">
+          <p style="font-size:13px;color:var(--text-secondary);">— Información poco clara o saturada</p>
+          <p style="font-size:13px;color:var(--text-secondary);">— Inseguridad sobre el impacto real</p>
+          <p style="font-size:13px;color:var(--text-secondary);">— Procesos administrativos opacos</p>
+          <p style="font-size:13px;color:var(--text-secondary);">— Tiempo y dinero como barreras</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="pull-quote">
+      <p>La propuesta de valor del Portal del Alumno se resume en una frase: <strong>autonomía sin fricción</strong>. El alumno debe poder gestionar lo esencial — calificaciones, trámites, comunicación, calendario — sin depender de nadie, desde cualquier dispositivo y en menos de 5 minutos.</p>
+    </div>
+  </section>
+
+
+
+  <!-- 5. ARQUITECTURA -->
+  <section class="cs-section">
+    <p class="section-label">13 — Arquitectura de Información</p>
+    <h2 class="section-title">Luego, <em>estructurar</em></h2>
+
+    <p class="body-text">El card sorting reveló algo que ningún benchmark hubiera mostrado: los alumnos organizan el portal según sus objetivos reales de uso, no según los departamentos de la universidad. Esa diferencia parece pequeña. En arquitectura de información, lo cambia todo.</p>
+
+    <p class="body-text">La arquitectura final responde directamente a ese hallazgo, con <strong>7 bloques principales</strong> que responden a objetivos de uso real.</p>
+
+    <div class="ia-grid">
+      <div class="ia-block">
+        <div class="ia-section-title">🏠 Resumen (Home/Dashboard)</div>
+        <div class="ia-items">
+          <span class="ia-item">Estado general</span>
+          <span class="ia-item">Lo más importante de hoy (pendientes)</span>
+          <span class="ia-item">Atajos rápidos: pagos, trámites, matrícula</span>
+          <span class="ia-item">Actividad reciente</span>
+        </div>
+      </div>
+      <div class="ia-block">
+        <div class="ia-section-title">🎓 Académico</div>
+        <div class="ia-items">
+          <span class="ia-item">Matrículas y estado de matrícula</span>
+          <span class="ia-item">Estado académico — notas y calificaciones</span>
+          <span class="ia-item">Expediente</span>
+          <span class="ia-item">Certificados académicos</span>
+        </div>
+      </div>
+      <div class="ia-block">
+        <div class="ia-section-title">💻 Aula Virtual</div>
+        <div class="ia-items">
+          <span class="ia-item">Canvas (Aula virtual)</span>
+          <span class="ia-item">Webinars + IA</span>
+          <span class="ia-item">Evaluación docente</span>
+        </div>
+      </div>
+      <div class="ia-block">
+        <div class="ia-section-title">💰 Finanzas</div>
+        <div class="ia-items">
+          <span class="ia-item">Pagos pendientes e historial</span>
+          <span class="ia-item">Próximos vencimientos</span>
+          <span class="ia-item">Recibos y comprobantes</span>
+          <span class="ia-item">Trámites en proceso</span>
+        </div>
+      </div>
+      <div class="ia-block">
+        <div class="ia-section-title">📁 Trámites y Documentos</div>
+        <div class="ia-items">
+          <span class="ia-item">Trámites completados</span>
+          <span class="ia-item">Certificados emitidos</span>
+          <span class="ia-item">Comprobantes de pago</span>
+          <span class="ia-item">Documentación académica</span>
+        </div>
+      </div>
+      <div class="ia-block">
+        <div class="ia-section-title">💼 Empleabilidad</div>
+        <div class="ia-items">
+          <span class="ia-item">Portal de empleo</span>
+          <span class="ia-item">Orientación laboral</span>
+        </div>
+      </div>
+      <div class="ia-block">
+        <div class="ia-section-title">👤 Perfil</div>
+        <div class="ia-items">
+          <span class="ia-item">Datos personales</span>
+          <span class="ia-item">Seguridad</span>
+          <span class="ia-item">Preferencias</span>
+        </div>
+      </div>
+      <div class="ia-block">
+        <div class="ia-section-title">🔔 Notificaciones (capa transversal)</div>
+        <div class="ia-items">
+          <span class="ia-item">Badge en header — acceso persistente</span>
+          <span class="ia-item">Presente en todas las pantallas</span>
+          <span class="ia-item">No es una sección: es una capa del sistema</span>
+        </div>
+      </div>
+    </div>
+
+    <img src="assets/enaepass/13-arquitectura-ia.jpg" alt="Arquitectura de Información" class="case-img">
+    <p class="case-img-caption">Arquitectura de Información final — 7 bloques organizados por objetivos de uso real</p>
+
+    <div class="divider"></div>
+
+    <h3 style="font-family:'Space Grotesk',sans-serif; font-size:18px; font-weight:600; letter-spacing:-0.02em; margin-bottom:1.5rem;">Decisiones clave de arquitectura</h3>
+
+    <table class="cs-table">
+      <thead>
+        <tr>
+          <th style="width:28%">Decisión</th>
+          <th>Justificación UX</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Resumen como punto de entrada</td>
+          <td>La Home debe responder a "¿qué tengo pendiente hoy?", no a "¿a dónde quiero ir?". Los usuarios percibían el panel de atajos como launchpad, pero no como guía de acción.</td>
+        </tr>
+        <tr>
+          <td>Notificaciones como capa global</td>
+          <td>El card sorting confirmó que los usuarios interpretan las notificaciones como un sistema transversal. Situarlas como sección independiente rompe el modelo mental.</td>
+        </tr>
+        <tr>
+          <td>Aula Virtual separada de Académico</td>
+          <td>Los usuarios distinguen claramente entre lo administrativo (matrícula, notas oficiales) y lo formativo (Canvas, webinars). Mezclarlos genera confusión cognitiva.</td>
+        </tr>
+        <tr>
+          <td>Trámites y Documentación agrupados</td>
+          <td>El card sorting confirma que los usuarios perciben estas categorías como el mismo "universo administrativo". Separarlas aumenta la fricción.</td>
+        </tr>
+        <tr>
+          <td>Empleabilidad en primer nivel</td>
+          <td>La presencia espontánea del Portal de Empleo en el card sorting confirma que los alumnos dan valor estratégico real a la empleabilidad. No puede ser un submenú.</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+
+  <!-- 6. DISEÑO -->
+  <section class="cs-section">
+    <p class="section-label">14 — Diseño visual</p>
+    <h2 class="section-title">Después, <em>diseñar</em></h2>
+
+    <p class="body-text">Cada decisión visual tiene una justificación funcional. El diseño no es decoración: es la traducción de los insights de investigación en decisiones tangibles.</p>
+
+    <div class="divider"></div>
+
+    <h3 style="font-family:'Space Grotesk',sans-serif; font-size:18px; font-weight:600; letter-spacing:-0.02em; margin-bottom:1.5rem;">Layout — Tres capas estructurales</h3>
+
+    <div style="display:grid; grid-template-columns: repeat(3,1fr); gap:16px; margin: 1.5rem 0;">
+      <div style="background:var(--surface); border:1px solid var(--border); border-radius:4px; padding:1.5rem;">
+        <p style="font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:var(--accent); margin-bottom:0.5rem;">Sidebar izquierdo</p>
+        <p style="font-size:13px; color:var(--text-secondary); line-height:1.6;">Navegación principal persistente. El benchmark y el testing confirman que el sidebar facilita la orientación en plataformas con mucho contenido y permite escalar sin romper la jerarquía.</p>
+      </div>
+      <div style="background:var(--surface); border:1px solid var(--border); border-radius:4px; padding:1.5rem;">
+        <p style="font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:var(--accent); margin-bottom:0.5rem;">Header superior</p>
+        <p style="font-size:13px; color:var(--text-secondary); line-height:1.6;">Contexto del usuario, notificaciones y accesos globales. Punto de anclaje visual constante independiente del contenido que esté en el cuerpo central.</p>
+      </div>
+      <div style="background:var(--surface); border:1px solid var(--border); border-radius:4px; padding:1.5rem;">
+        <p style="font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:var(--accent); margin-bottom:0.5rem;">Cuerpo central</p>
+        <p style="font-size:13px; color:var(--text-secondary); line-height:1.6;">Grid de 4 columnas con 24px de gutter y 48px de margen lateral. Permite desde grids densos de tarjetas hasta layouts de detalle sin romper la consistencia.</p>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <h3 style="font-family:'Space Grotesk',sans-serif; font-size:18px; font-weight:600; letter-spacing:-0.02em; margin-bottom:1.5rem;">Sistema de color</h3>
+
+    <div class="color-grid">
+      <div class="color-swatch">
+        <div class="swatch-color" style="background:#8B1A2F;"></div>
+        <div class="swatch-info">
+          <p class="swatch-role">Primario</p>
+          <p class="swatch-hex">#8B1A2F</p>
+        </div>
+      </div>
+      <div class="color-swatch">
+        <div class="swatch-color" style="background:#111111; border-bottom:1px solid #2e2e2e;"></div>
+        <div class="swatch-info">
+          <p class="swatch-role">Secundario</p>
+          <p class="swatch-hex">#111111</p>
+        </div>
+      </div>
+      <div class="color-swatch">
+        <div class="swatch-color" style="background:#2E7D32;"></div>
+        <div class="swatch-info">
+          <p class="swatch-role">Éxito</p>
+          <p class="swatch-hex">#2E7D32</p>
+        </div>
+      </div>
+      <div class="color-swatch">
+        <div class="swatch-color" style="background:#F59E0B;"></div>
+        <div class="swatch-info">
+          <p class="swatch-role">Aviso</p>
+          <p class="swatch-hex">#F59E0B</p>
+        </div>
+      </div>
+      <div class="color-swatch">
+        <div class="swatch-color" style="background:#EF4444;"></div>
+        <div class="swatch-info">
+          <p class="swatch-role">Error</p>
+          <p class="swatch-hex">#EF4444</p>
+        </div>
+      </div>
+      <div class="color-swatch">
+        <div class="swatch-color" style="background:#3B82F6;"></div>
+        <div class="swatch-info">
+          <p class="swatch-role">Informativo</p>
+          <p class="swatch-hex">#3B82F6</p>
+        </div>
+      </div>
+    </div>
+
+    <p class="body-text"><strong>Decisión clave:</strong> el rojo corporativo se reserva exclusivamente para acciones prioritarias. Esto crea un sistema de jerarquía visual clara donde el usuario siempre identifica el "siguiente paso natural" sin necesidad de leer cada elemento.</p>
+
+    <div class="divider"></div>
+
+    <h3 style="font-family:'Space Grotesk',sans-serif; font-size:18px; font-weight:600; letter-spacing:-0.02em; margin-bottom:1.5rem;">Sistema tipográfico</h3>
+
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:1.5rem 0;">
+      <div class="type-sample">
+        <p class="type-meta" style="margin-bottom:0.75rem;">SF UI Display — Encabezados</p>
+        <p class="type-heading">Portal del<br>Alumno</p>
+        <p style="font-size:12px; color:var(--text-muted); margin-top:1rem; line-height:1.5;">Carácter institucional, escaneo rápido de secciones y jerarquía visual.</p>
+      </div>
+      <div class="type-sample">
+        <p class="type-meta" style="margin-bottom:0.75rem;">Open Sans — Cuerpo de texto</p>
+        <p style="font-family:'Inter',sans-serif; font-size:16px; color:var(--text-secondary); line-height:1.7;">Alta legibilidad en tamaños pequeños y medianos. Ideal para etiquetas, formularios y contenido académico de alta densidad.</p>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <h3 style="font-family:'Space Grotesk',sans-serif; font-size:18px; font-weight:600; letter-spacing:-0.02em; margin-bottom:1.5rem;">Flujos principales</h3>
+
+    <div class="flow-box">
+      <p class="flow-title">Flujo 1 — Solicitar un certificado académico</p>
+      <div class="flow-steps">
+        <span class="flow-step">Home</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-step">Trámites y documentos</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-step">Nuevo trámite</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-step">Seleccionar tipo</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-step">Revisar datos</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-step">Confirmar</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-step">Estado "En proceso"</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-step">Notificación + Descarga</span>
+      </div>
+    </div>
+
+    <div class="flow-box">
+      <p class="flow-title">Flujo 2 — Consultar estado académico</p>
+      <div class="flow-steps">
+        <span class="flow-step">Home</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-step">Académico</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-step">Estado académico</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-step">Resumen de asignaturas</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-step">Filtrar por estado</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-step">Detalle de asignatura</span>
+      </div>
+    </div>
+
+    <div class="flow-box">
+      <p class="flow-title">Flujo 3 — Acceder a un webinar</p>
+      <div class="flow-steps">
+        <span class="flow-step">Home</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-step">Aula virtual</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-step">Webinars</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-step">Buscar / filtrar</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-step">Seleccionar</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-step">Reproducir</span>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- 7. PROTOTIPADO -->
+  <section class="cs-section">
+    <p class="section-label">15 — Prototipado</p>
+    <h2 class="section-title">Del sketch al <em>prototipo funcional</em></h2>
+
+    <div class="iteration-grid">
+      <div class="iteration-card">
+        <div class="iteration-phase">Fase 1 — Baja fidelidad</div>
+        <div class="iteration-body">
+          <p class="iteration-title">Sketches en papel</p>
+          <p class="iteration-desc">Papel craft para evitar el sesgo visual. 4 variantes de estructura testeadas con usuarios reales. Primer pain point documentado: "¿Dónde está para pedir ayuda?"</p>
+        </div>
+      </div>
+      <div class="iteration-card">
+        <div class="iteration-phase">Fase 2 — Media fidelidad</div>
+        <div class="iteration-body">
+          <p class="iteration-title">Wireframes digitales</p>
+          <p class="iteration-desc">A partir de los sketches validados y el card sorting. Layout de 3 capas, jerarquía de secciones y flujos principales definidos. Incorporación de zona de ayuda visible.</p>
+        </div>
+      </div>
+      <div class="iteration-card">
+        <div class="iteration-phase hi">Fase 3 — Alta fidelidad</div>
+        <div class="iteration-body">
+          <p class="iteration-title">Prototipo funcional</p>
+          <p class="iteration-desc">Sistema visual completo en Figma: tipografía, colores, componentes, iconografía y estados interactivos. Artefacto utilizado en el usability testing final.</p>
+        </div>
+      </div>
+    </div>
+
+    <p class="body-text" style="margin-top:1.5rem;">Pantallas principales prototipadas: Login, Home/Dashboard (dos variantes), Estado académico, Flujo de solicitud de certificado, Webinars con búsqueda y filtros, y Notificaciones como capa global.</p>
+
+    <img src="assets/enaepass/22-prototipo-home.jpg" alt="Prototipo — Home/Dashboard" class="case-img">
+    <p class="case-img-caption">Prototipo de alta fidelidad — Home/Dashboard con panel de bienvenida y accesos rápidos</p>
+  </section>
+
+
+  <!-- 8. TESTING -->
+  <section class="cs-section">
+    <p class="section-label">16 — Testing y hallazgos</p>
+    <h2 class="section-title">Por último, <em>testar y aprender</em></h2>
+
+    <p class="body-text">Se realizaron dos rondas de testing con usuarios reales. El hallazgo más valioso no vino de las tareas completadas, sino de las pausas.</p>
+
+    <img src="assets/enaepass/23-escenarios-testing.jpg" alt="Escenarios de Usability Testing" class="case-img">
+    <p class="case-img-caption">Usability Testing — 3 escenarios con shadowing presencial</p>
+
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:2rem 0;">
+      <div style="background:var(--surface); border:1px solid var(--border); border-radius:4px; padding:1.5rem;">
+        <p style="font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:var(--text-muted); margin-bottom:0.75rem;">Ronda 1</p>
+        <p style="font-family:'Space Grotesk',sans-serif; font-size:15px; font-weight:600; margin-bottom:0.5rem;">Test de concepto</p>
+        <p style="font-size:13px; color:var(--text-secondary); line-height:1.6;">3 participantes · Formato presencial · Exploración libre con preguntas de orientación sobre los sketches en papel</p>
+      </div>
+      <div style="background:var(--surface); border:1px solid var(--border); border-radius:4px; padding:1.5rem;">
+        <p style="font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:var(--text-muted); margin-bottom:0.75rem;">Ronda 2</p>
+        <p style="font-family:'Space Grotesk',sans-serif; font-size:15px; font-weight:600; margin-bottom:0.5rem;">Usability Testing con prototipo</p>
+        <p style="font-size:13px; color:var(--text-secondary); line-height:1.6;">3 participantes · Shadowing con 3 escenarios · Registro de tiempo, errores y verbalizaciones espontáneas</p>
+      </div>
+    </div>
+
+    <h3 style="font-family:'Space Grotesk',sans-serif; font-size:18px; font-weight:600; letter-spacing:-0.02em; margin-bottom:1.5rem;">Hallazgos por severidad</h3>
+
+    <div class="finding-list">
+      <div class="finding-item">
+        <span class="finding-badge">✅</span>
+        <div>
+          <p class="finding-title">El portal se percibe como ordenado y con lógica de dashboard clara</p>
+          <p class="finding-detail">Todos los participantes identificaron el propósito del portal sin instrucciones previas, confirmando la claridad del modelo visual propuesto.</p>
+        </div>
+      </div>
+      <div class="finding-item">
+        <span class="finding-badge">✅</span>
+        <div>
+          <p class="finding-title">Tarea de webinar completada fluidamente en todos los casos</p>
+          <p class="finding-detail">Tasa de éxito del 100% en el escenario 1. La separación entre módulos fue inmediatamente comprendida.</p>
+        </div>
+      </div>
+      <div class="finding-item">
+        <span class="finding-badge" style="font-size:12px; color:#f87171;">🔴</span>
+        <div>
+          <p class="finding-title">Crítico: ausencia de zona de ayuda visible</p>
+          <p class="finding-detail">Cuando se preguntó "¿qué harías si no encuentras lo que necesitas?", todos los usuarios hicieron una pausa. El portal no ofrecía un punto de soporte evidente. Este insight reconfiguró la navegación final.</p>
+        </div>
+      </div>
+      <div class="finding-item">
+        <span class="finding-badge" style="font-size:12px; color:#fb923c;">🟠</span>
+        <div>
+          <p class="finding-title">Cards del panel visualmente muy similares entre sí</p>
+          <p class="finding-detail">Los usuarios debían leer el texto para identificar cada servicio. La iconografía no era suficientemente diferenciada por silueta y metáfora.</p>
+        </div>
+      </div>
+      <div class="finding-item">
+        <span class="finding-badge" style="font-size:12px; color:#fbbf24;">🟡</span>
+        <div>
+          <p class="finding-title">Algunos nombres de sección no describían con suficiente claridad su finalidad</p>
+          <p class="finding-detail">Nomenclatura interna de la universidad usada en lugar de nombres orientados a la tarea del usuario.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <h3 style="font-family:'Space Grotesk',sans-serif; font-size:18px; font-weight:600; letter-spacing:-0.02em; margin-bottom:1.5rem;">Cambios aplicados post-testing</h3>
+
+    <table class="cs-table">
+      <thead>
+        <tr>
+          <th>Cambio</th>
+          <th>Qué se hizo</th>
+          <th>Por qué</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Acceso de ayuda persistente</td>
+          <td>Punto de soporte visible en sidebar y header, presente en todas las pantallas</td>
+          <td>Responde al pain point más crítico detectado: "¿Dónde está para pedir ayuda?"</td>
+        </tr>
+        <tr>
+          <td>Diferenciación iconográfica</td>
+          <td>Revisión de siluetas y metáforas de iconos; sistema de color por categoría</td>
+          <td>Eliminar la necesidad de leer el texto para identificar cada servicio</td>
+        </tr>
+        <tr>
+          <td>Revisión de nomenclatura</td>
+          <td>Cada sección renombrada por lo que el alumno puede hacer allí, no por el nombre del departamento</td>
+          <td>Reducir la fricción cognitiva al navegar</td>
+        </tr>
+        <tr>
+          <td>Home orientada a decisiones</td>
+          <td>Bloque dominante "Lo más importante de hoy" antes de los accesos directos</td>
+          <td>La pregunta que responde la Home cambió de "¿A dónde quieres ir?" a "¿Qué tienes que hacer ahora?"</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+
+  <!-- 9. RESULTADOS -->
+  <section class="cs-section">
+    <p class="section-label">17 — Resultados</p>
+    <h2 class="section-title">El resultado: menos <em>buscar</em>, más <em>hacer</em></h2>
+
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:2rem 0;">
+      <div style="background:var(--surface); border:1px solid var(--border); border-radius:4px; padding:2rem;">
+        <p style="font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:var(--text-muted); margin-bottom:1rem;">Impacto para usuarios</p>
+        <ul style="list-style:none; display:flex; flex-direction:column; gap:0.75rem;">
+          <li style="font-size:14px; color:var(--text-secondary); display:flex; gap:0.75rem;"><span style="color:var(--accent); flex-shrink:0;">—</span>Reducción significativa del tiempo para completar trámites administrativos</li>
+          <li style="font-size:14px; color:var(--text-secondary); display:flex; gap:0.75rem;"><span style="color:var(--accent); flex-shrink:0;">—</span>Eliminación de la dependencia del email para gestiones académicas rutinarias</li>
+          <li style="font-size:14px; color:var(--text-secondary); display:flex; gap:0.75rem;"><span style="color:var(--accent); flex-shrink:0;">—</span>Reducción de ansiedad en el onboarding de alumnos internacionales</li>
+          <li style="font-size:14px; color:var(--text-secondary); display:flex; gap:0.75rem;"><span style="color:var(--accent); flex-shrink:0;">—</span>Mejor gestión del tiempo para perfiles que combinan estudio y trabajo</li>
+        </ul>
+      </div>
+      <div style="background:var(--surface); border:1px solid var(--border); border-radius:4px; padding:2rem;">
+        <p style="font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:var(--text-muted); margin-bottom:1rem;">Impacto para negocio</p>
+        <ul style="list-style:none; display:flex; flex-direction:column; gap:0.75rem;">
+          <li style="font-size:14px; color:var(--text-secondary); display:flex; gap:0.75rem;"><span style="color:var(--accent); flex-shrink:0;">—</span>Reducción de la carga operativa del equipo administrativo</li>
+          <li style="font-size:14px; color:var(--text-secondary); display:flex; gap:0.75rem;"><span style="color:var(--accent); flex-shrink:0;">—</span>Mejora de la percepción de calidad del servicio educativo</li>
+          <li style="font-size:14px; color:var(--text-secondary); display:flex; gap:0.75rem;"><span style="color:var(--accent); flex-shrink:0;">—</span>Base escalable para IA, chatbot y orientación personalizada</li>
+          <li style="font-size:14px; color:var(--text-secondary); display:flex; gap:0.75rem;"><span style="color:var(--accent); flex-shrink:0;">—</span>Diferenciador competitivo en captación de alumnado internacional</li>
+        </ul>
+      </div>
+    </div>
+
+    <img src="assets/enaepass/24-conclusiones.jpg" alt="Conclusiones del testing" class="case-img">
+    <p class="case-img-caption">Resultados del Usability Testing — experiencia media de los usuarios en los 3 escenarios</p>
+
+    <div class="pull-quote">
+      <p>La conclusión global es que el portal ya tiene una base fuerte para generar seguridad. Su gran oportunidad está en convertirse en un sistema anti-ansiedad: menos buscar y descifrar, más ver y hacer.</p>
+    </div>
+  </section>
+
+
+  <!-- 10. REFLEXIÓN -->
+  <section class="cs-section">
+    <p class="section-label">18 — Reflexión</p>
+    <h2 class="section-title">Qué <em>aprendí</em></h2>
+
+    <div class="learning-grid">
+      <div class="learning-card">
+        <div class="learning-icon">🎯</div>
+        <p class="learning-title">Diseñar para la emoción, no solo para la tarea</p>
+        <p class="learning-desc">El hallazgo más valioso vino de las entrevistas cualitativas. La dimensión emocional —el miedo a no integrarse, la soledad del alumno internacional— cambió completamente el enfoque del proyecto. Diseñar un portal que reduce ansiedad es diferente a diseñar un portal que organiza información.</p>
+      </div>
+      <div class="learning-card">
+        <div class="learning-icon">🃏</div>
+        <p class="learning-title">3 personas + 1 mesa + tarjetas = mejor insight que 10 best practices</p>
+        <p class="learning-desc">El card sorting presencial con solo 3 personas fue más revelador que cualquier análisis de benchmark. Las decisiones de separar Aula Virtual de Académico, o de tratar las notificaciones como capa transversal, no salieron de ninguna best practice: salieron de observar cómo tres personas agrupaban tarjetas en una mesa.</p>
+      </div>
+      <div class="learning-card">
+        <div class="learning-icon">⏸</div>
+        <p class="learning-title">La pausa del usuario dice más que su respuesta</p>
+        <p class="learning-desc">La iteración más importante no fue un cambio de diseño, sino un cambio de pregunta: pasar de "¿puedes encontrar el certificado?" a "¿qué harías si no encuentras lo que necesitas?". Esa segunda pregunta reveló el pain point más crítico de todo el proyecto: la ausencia de un punto de ayuda visible.</p>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <h3 style="font-family:'Space Grotesk',sans-serif; font-size:18px; font-weight:600; letter-spacing:-0.02em; margin-bottom:1.5rem;">Qué mejoraría</h3>
+
+    <table class="cs-table">
+      <thead>
+        <tr>
+          <th>Gap</th>
+          <th>Cómo mejorarlo</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Muestra pequeña (3 participantes)</td>
+          <td>5–8 participantes mínimo en testing de usabilidad. Card sorting con Maze u OptimalSort para análisis de dendrograma con mayor volumen.</td>
+        </tr>
+        <tr>
+          <td>Ausencia del equipo de administración</td>
+          <td>Añadir perspectiva Service Design con un Service Blueprint que muestre los flujos del alumno y del personal en paralelo.</td>
+        </tr>
+        <tr>
+          <td>Métricas definidas ex post</td>
+          <td>Establecer KPIs como hipótesis de partida antes de diseñar. Reformular el proceso para mostrar que validan hipótesis, no que describen resultados.</td>
+        </tr>
+        <tr>
+          <td>Sin exploración alternativa documentada</td>
+          <td>Añadir sección "Caminos explorados y descartados" con 2–3 variantes evaluadas y su justificación de rechazo.</td>
+        </tr>
+        <tr>
+          <td>Ausencia de diseño mobile documentado</td>
+          <td>Al menos 3 pantallas clave en formato mobile (Home, Estado académico, Solicitud) con navegación bottom-bar adaptada.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="divider"></div>
+
+    <h3 style="font-family:'Space Grotesk',sans-serif; font-size:18px; font-weight:600; letter-spacing:-0.02em; margin-bottom:1.5rem;">Próximos pasos</h3>
+
+    <div style="display:flex; flex-direction:column; gap:12px; margin:1.5rem 0;">
+      <div style="display:grid; grid-template-columns:24px 1fr; gap:1rem; background:var(--surface); border:1px solid var(--border); border-radius:4px; padding:1.25rem 1.5rem; align-items:start;">
+        <span style="font-family:'Space Grotesk',sans-serif; font-size:13px; font-weight:700; color:var(--accent);">1</span>
+        <span style="font-size:13px; color:var(--text-secondary); line-height:1.6;"><strong style="color:var(--text-primary);">Iterar la Home</strong> con el enfoque de "decisiones rápidas": bloque de "Lo más importante de hoy" como elemento dominante.</span>
+      </div>
+      <div style="display:grid; grid-template-columns:24px 1fr; gap:1rem; background:var(--surface); border:1px solid var(--border); border-radius:4px; padding:1.25rem 1.5rem; align-items:start;">
+        <span style="font-family:'Space Grotesk',sans-serif; font-size:13px; font-weight:700; color:var(--accent);">2</span>
+        <span style="font-size:13px; color:var(--text-secondary); line-height:1.6;"><strong style="color:var(--text-primary);">Diseñar el sistema de iconografía diferenciada</strong> con patrón de color por categoría para resolver el problema de distinción visual en las cards.</span>
+      </div>
+      <div style="display:grid; grid-template-columns:24px 1fr; gap:1rem; background:var(--surface); border:1px solid var(--border); border-radius:4px; padding:1.25rem 1.5rem; align-items:start;">
+        <span style="font-family:'Space Grotesk',sans-serif; font-size:13px; font-weight:700; color:var(--accent);">3</span>
+        <span style="font-size:13px; color:var(--text-secondary); line-height:1.6;"><strong style="color:var(--text-primary);">Desarrollar el flujo de onboarding</strong> para alumnos nuevos: el insight de la soledad del primer día merece un módulo propio.</span>
+      </div>
+      <div style="display:grid; grid-template-columns:24px 1fr; gap:1rem; background:var(--surface); border:1px solid var(--border); border-radius:4px; padding:1.25rem 1.5rem; align-items:start;">
+        <span style="font-family:'Space Grotesk',sans-serif; font-size:13px; font-weight:700; color:var(--accent);">4</span>
+        <span style="font-size:13px; color:var(--text-secondary); line-height:1.6;"><strong style="color:var(--text-primary);">Incorporar prototipo mobile</strong> con navegación bottom-bar adaptada al contexto móvil.</span>
+      </div>
+      <div style="display:grid; grid-template-columns:24px 1fr; gap:1rem; background:var(--surface); border:1px solid var(--border); border-radius:4px; padding:1.25rem 1.5rem; align-items:start;">
+        <span style="font-family:'Space Grotesk',sans-serif; font-size:13px; font-weight:700; color:var(--accent);">5</span>
+        <span style="font-size:13px; color:var(--text-secondary); line-height:1.6;"><strong style="color:var(--text-primary);">Definir la propuesta de chatbot/IA</strong> como canal de ayuda persistente: el insight de "comunicación rápida y moderna" apunta directamente a esta solución.</span>
+      </div>
+    </div>
+  </section>
+
+</div><!-- /case-content -->
+
+
+<!-- CTA -->
+<div class="case-cta">
+  <p class="cta-label">¿Hablamos?</p>
+  <h2 class="cta-title">Ver más proyectos<span style="color:var(--accent);">.</span></h2>
+  <div class="cta-btns">
+    <a href="portfolio-marcos.html" class="btn-primary">← Volver al portfolio</a>
+    <a href="mailto:hola@marcosruiz.es" class="btn-secondary">hola@marcosruiz.es</a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="case-footer">
+  <span class="footer-left">© 2025 Marcos Ruiz Ibáñez — Portal del Alumno · TFM Máster UX/UI</span>
+  <div class="footer-links">
+    <a href="#">LinkedIn</a>
+    <a href="#">Behance</a>
+    <a href="mailto:hola@marcosruiz.es">hola@marcosruiz.es</a>
+  </div>
+</footer>
+
+</body>
+</html>
